@@ -1,0 +1,36 @@
+name = "tmg-ucm"
+main = "worker/dist/index.mjs"
+
+account_id = "b4adf6cfdac0918eb6aa5ad033da0747"
+workers_dev = true
+
+compatibility_date = "2022-06-13"
+compatibility_flags = []
+
+[build]
+command = "NODE_ENV=development npm run build"
+watch_dir = "./worker"
+
+
+[env.stage.build]
+command = "NODE_ENV=stage npm run build"
+
+[env.production.build]
+command = "NODE_ENV=production npm run build"
+
+
+[vars]
+UPSTREAM = "http://localhost:3000"
+
+[env.stage.vars]
+UPSTREAM = "https://main--tmg-ucm--hlxsites.hlx.live"
+
+[env.production.vars]
+UPSTREAM = "https://main--tmg-ucm--hlxsites.hlx.live"
+
+
+# The necessary secrets are:
+# - GOOGLE_CLIENT_SECRET
+# - GOOGLE_DEVICECODE_CLIENT_SECRET
+# - MICROSOFT_CLIENT_SECRET
+# Run `wrangler secret put <NAME> <VALUE>` for each of these
