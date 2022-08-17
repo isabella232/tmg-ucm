@@ -8,7 +8,11 @@
     "test:watch": "npm test -- --watch",
     "lint:js": "eslint .",
     "lint:css": "stylelint 'blocks/**/*.css' 'styles/*.css'",
-    "lint": "npm run lint:js && npm run lint:css"
+    "lint": "npm run lint:js && npm run lint:css",
+    "deploy": "wrangler publish --env production",
+    "build": "node ./worker/build.mjs",
+    "dev": "NODE_ENV=development miniflare --live-reload --debug --modules worker/dist/index.mjs",
+    "dev:remote": "NODE_ENV=development wrangler dev"
   },
   "repository": {
     "type": "git",
@@ -23,16 +27,30 @@
   "devDependencies": {
     "@babel/core": "7.18.10",
     "@babel/eslint-parser": "7.18.9",
-    "chai": "4.3.6",
-    "eslint": "8.21.0",
-    "eslint-config-airbnb-base": "15.0.0",
-    "eslint-plugin-import": "2.26.0",
+    "@cloudflare/workers-types": "3.14.1",
     "@esm-bundle/chai": "4.3.4-fix.0",
+    "@types/uuid": "8.3.4",
+    "@typescript-eslint/eslint-plugin": "5.33.0",
+    "@typescript-eslint/parser": "5.33.0",
     "@web/test-runner": "0.13.31",
     "@web/test-runner-commands": "0.6.3",
+    "chai": "4.3.6",
+    "dotenv": "16.0.1",
+    "esbuild": "0.15.4",
+    "eslint": "8.21.0",
+    "eslint-config-airbnb-base": "15.0.0",
+    "eslint-import-resolver-typescript": "3.4.1",
+    "eslint-plugin-import": "2.26.0",
+    "semantic-release": "19.0.3",
     "sinon": "14.0.0",
     "stylelint": "14.9.1",
     "stylelint-config-prettier": "9.0.3",
-    "stylelint-config-standard": "25.0.0"
+    "stylelint-config-standard": "25.0.0",
+    "typescript": "4.7.4",
+    "wrangler": "2.0.26"
+  },
+  "dependencies": {
+    "itty-router": "2.6.1",
+    "uuid": "8.3.2"
   }
 }

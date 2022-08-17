@@ -1,5 +1,7 @@
 import { readBlockConfig, decorateIcons } from '../../scripts/scripts.js';
 
+const TEST = true;
+
 /**
  * collapses all open nav sections
  * @param {Element} sections The container element
@@ -20,6 +22,17 @@ export default async function decorate(block) {
   const cfg = readBlockConfig(block);
   block.textContent = '';
 
+  // hardcoded nav
+  if (TEST) {
+    block.innerHTML = `
+<nav aria-expanded="false">
+  <div class="nav-hamburger"><div class="nav-hamburger-icon"></div></div>
+    <div class="nav-brand">
+      <p><a href="/"><img src="/icons/logo.svg"/></a></p>
+    </div>
+</nav>`;
+    return;
+  }
   // fetch nav content
   const navPath = cfg.nav || '/nav';
   const resp = await fetch(`${navPath}.plain.html`);
