@@ -256,7 +256,7 @@ const Content: Route = async (request, ctx) => {
 
   let resp = await fetch(`${env.API_ENDPOINT}/content-reader/v3/content/search`, {
     headers: {
-      app_key: API_KEY,
+      app_key: env.API_KEY,
       'content-type': 'application/json',
     },
     method: 'POST',

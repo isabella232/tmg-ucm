@@ -33,7 +33,7 @@ try {
       'process.env.PLATFORM': JSON.stringify(process.env.PLATFORM ?? 'cf'),
       ...(
         process.env.NODE_ENV === 'development' ? {
-          API_KEY: JSON.stringify(process.env.API_KEY),
+          'env.API_KEY': JSON.stringify(process.env.API_KEY),
         } : {}),
     },
     minify: true,

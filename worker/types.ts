@@ -18,6 +18,7 @@ export interface Env {
   UPSTREAM: string;
   API_ENDPOINT: string;
   CONTENT_ENDPOINT: string;
+  API_KEY: string;
 }
 
 export interface Context {

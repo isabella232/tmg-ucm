@@ -8,12 +8,12 @@ module.exports = {
         changelogFile: 'CHANGELOG.md',
       }
     ],
-    ['@semantic-release/npm',
+    [
+      '@semantic-release/npm',
       {
         npmPublish: false,
       },
     ],
-    // commit updates to versions, changelogs
     [
       '@semantic-release/git',
       {
@@ -21,7 +21,6 @@ module.exports = {
         message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
       },
     ],
-    // package plugin, deploy service
     [
       '@semantic-release/exec',
       {

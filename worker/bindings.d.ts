@@ -1,6 +1,5 @@
 declare global {
-  // secrets
-  const API_KEY: string;
+  // KV namespaces here
 }
 
 export {};
