@@ -70,10 +70,10 @@ const template = ({
         <link rel="icon" href="data:,">
     </head>
     <body>
-      <div>
-        <header>
-        </header>
-        <main>
+      <header>
+      </header>
+      <main>
+        <div>
           <h1>${headline}</h1>${standfirst ? `
           <p>${standfirst}</p>` : ''}
           <div class="authors">
@@ -92,10 +92,10 @@ ${
 }
           </div>
           ${content}
-        </main>
-        <footer></footer>
-      </div>
-    </body>
+        </div>
+      </main>
+    <footer></footer>
+  </body>
 </html>`;
 };
 
