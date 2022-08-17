@@ -19,10 +19,13 @@ const setupEnv = (env: Env): Env => {
     return env;
   }
 
-  return {
-    ...env,
-    API_KEY: process.env.API_KEY,
-  };
+  env.API_KEY = process.env.API_KEY;
+
+  if (process.env.UPSTREAM) {
+    env.UPSTREAM = process.env.UPSTREAM;
+  }
+
+  return env;
 };
 
 export default {

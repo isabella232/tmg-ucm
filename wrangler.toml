@@ -21,19 +21,22 @@ command = "NODE_ENV=production npm run build"
 
 
 [vars]
-UPSTREAM = "https://main--tmg-ucm--hlxsites.hlx.live"
+UPSTREAM = "http://localhost:3000"
 API_ENDPOINT = "https://api.telegraph.co.uk"
 CONTENT_ENDPOINT = "https://www.telegraph.co.uk"
+CACHE_GEN = 0
 
 [env.stage.vars]
 UPSTREAM = "https://main--tmg-ucm--hlxsites.hlx.live"
 API_ENDPOINT = "https://api.telegraph.co.uk"
 CONTENT_ENDPOINT = "https://www.telegraph.co.uk"
+CACHE_GEN = 0
 
 [env.production.vars]
 UPSTREAM = "https://main--tmg-ucm--hlxsites.hlx.live"
 API_ENDPOINT = "https://api.telegraph.co.uk"
 CONTENT_ENDPOINT = "https://www.telegraph.co.uk"
+CACHE_GEN = 0
 
 # The necessary secrets are:
 # - API_KEY

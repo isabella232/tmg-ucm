@@ -16,6 +16,9 @@ const Helix: Route = async (request, ctx) => {
   const { env, log } = ctx;
 
   const url = new URL(request.url);
+  if (env.CACHE_GEN) {
+    url.searchParams.set('gen', env.CACHE_GEN);
+  }
   const upstream = `${env.UPSTREAM}${url.pathname}${url.search}`;
 
   log.debug('[Helix] fetching: ', upstream);

@@ -35,6 +35,7 @@ try {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.PLATFORM': JSON.stringify(process.env.PLATFORM ?? 'cf'),
       'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
+      'process.env.UPSTREAM': dev && process.env.UPSTREAM ? JSON.stringify(process.env.UPSTREAM) : '""',
     },
     minify: !dev,
     treeShaking: true,

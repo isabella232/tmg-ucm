@@ -5,6 +5,7 @@ declare global {
     env: {
       NODE_ENV: 'development' | 'production';
       API_KEY: string;
+      UPSTREAM: string;
     }
   }
 
