@@ -10,6 +10,9 @@
  * governing permissions and limitations under the License.
  */
 
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type AnyOk = any;
+
 export interface Invocation {
   requestId: string;
 }

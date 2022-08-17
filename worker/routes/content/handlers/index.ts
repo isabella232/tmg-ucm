@@ -10,17 +10,26 @@
  * governing permissions and limitations under the License.
  */
 
-import { Router } from 'itty-router';
-import type { Context } from './types';
+import video from './video';
+import particle from './particle';
+import image from './image';
+import { BodyNode } from '../types';
 
-import Helix from './routes/helix';
-import Content from './routes/content';
+export const processNode = (node: BodyNode): string => {
+  switch (node.type) {
+    case 'video':
+      return video(node);
+    case 'image':
+      return image(node);
+    case 'particle':
+      return particle(node);
+    default:
+      return node['html-data'];
+  }
+};
 
-const router = Router();
-
-router
-  .get('/+(nav|footer).plain.html', Helix)
-  .get('/*.+(png|svg|jpg|css|js)', Helix)
-  .get('/*', Content);
-
-export default (request: Request, ctx: Context) => router.handle(request, ctx) as Promise<Response>;
+export {
+  image,
+  video,
+  particle,
+};

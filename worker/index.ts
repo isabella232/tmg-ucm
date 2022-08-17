@@ -14,12 +14,23 @@ import { v4 as uuidv4 } from 'uuid';
 import handleRequest from './handler';
 import type { Env } from './types';
 
+const setupEnv = (env: Env): Env => {
+  if (process.env.NODE_ENV !== 'development') {
+    return env;
+  }
+
+  return {
+    ...env,
+    API_KEY: process.env.API_KEY,
+  };
+};
+
 export default {
   async fetch(request: Request, env: Env) {
     const requestId = uuidv4();
     const ctx = {
       log: console,
-      env,
+      env: setupEnv(env),
       invocation: {
         requestId,
       },

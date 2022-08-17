@@ -12,105 +12,19 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import type { Route } from '../types';
+import type { AnyOk } from '../../types';
+import { flattenKV } from '../../util';
+import type {
+  BodyNode,
+  Hit,
+  ImageNode,
+  TemplateOptions,
+} from './types';
+import { processNode } from './handlers';
 
-const makeQueryJSON = (url: string): string => {
-  return JSON.stringify({
-    booleanFilter: {
-      filters: [{
-        ranges: [{
-          field: 'metadata.extensions.key',
-          value: 'url',
-          operator: 'EQ',
-        }],
-        operator: 'AND',
-      }, {
-        ranges: [{
-          field: 'metadata.extensions.value',
-          value: url,
-          operator: 'EQ',
-        }],
-        operator: 'AND',
-      }],
-      operator: 'AND',
-    },
-  });
-};
-
-interface BodyNodeBase {
-    type: string;
-    data: string;
-    'html-data': string;
-    [key: string]: string | number;
-}
-
-interface ImageNode extends BodyNodeBase {
-  type: 'image';
-  'alt-text': string;
-  credit: string;
-  caption: string;
-  'html-caption': string;
-  width: number;
-  height: number;
-}
-
-type BodyNode = ImageNode | BodyNodeBase;
-
-interface Author {
-  name: string;
-  uri: string;
-  url: string;
-  role: string;
-}
-
-interface Hit {
-  metadata: {
-    type: string;
-    extensions: {
-      'key': string;
-      'value': string;
-    }[];
-    annotations: {
-      'name': string;
-      'uri': string;
-    }[];
-    'tmg-created-date': string;
-    [key: string]: unknown;
-  }
-  content: {
-    headline: string;
-    standfirst?: string;
-    authors: Author[];
-    body: BodyNode[];
-  }
-}
-
-interface TemplateOptions {
-  title: string;
-  meta: {
-    canonicalLink: string;
-    description: string;
-    tags: string[];
-    createdDate: string;
-    type: string;
-  };
-  image: {
-    url: string;
-    alt: string;
-    credit?: string;
-    width: number;
-    height: number;
-  };
-  authors: Author[];
-  extensions: {
-    twitterSite: string;
-    webChannelUrl: string;
-  };
-  headline: string;
-  standfirst?: string;
-  content: string;
-}
-
+/**
+ * Create HTML document from data using template
+ */
 const template = ({
   title,
   meta,
@@ -157,24 +71,24 @@ const template = ({
     </head>
     <body>
         <header>
-          <h1>${headline}</h1>${standfirst ? `
-          <p>${standfirst}</p>` : ''}
         </header>
         <main>
+          <h1>${headline}</h1>${standfirst ? `
+          <p>${standfirst}</p>` : ''}
           <div class="authors">
-            <div>
 ${
   authors.map((author) => {
     return `\
+            <div>
               <div>
                 <a href="${author.url}">${author.name}</a>
               </div>
               <div>
                 ${author.role ?? ''}
-              </div>`;
+              </div>
+            </div>`;
   }).join('\n')
 }
-            </div>
           </div>
           ${content}
         </main>
@@ -183,42 +97,35 @@ ${
 </html>`;
 };
 
-const flattenKV = (
-  arr: Record<string, string>[],
-  keyKey: string,
-  valKey: string,
-): Record<string, string> => {
-  const obj = {};
-  arr.forEach((a) => {
-    obj[a[keyKey]] = a[valKey];
-  });
-  return obj;
-};
-
+/**
+ * Convert each body node to corresponding HTML
+ */
 const templateContent = (nodes: BodyNode[]): string => {
-  const processNode = (node: BodyNode): string => {
-    if (node.type === 'text') {
-      return node['html-data'];
-    }
-    if (node.type === 'image') {
-      if (!node['html-caption']) {
-        return '';
-      }
-
-      return `${node['html-data']}\n${node['html-caption']}`;
-    }
-    return node['html-data'];
-  };
   return nodes.map(processNode).filter((n) => !!n).join('\n');
 };
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const generateHTML = (queryRes: any) => {
+const getOgImage = (nodes: BodyNode[]): ImageNode & { url: string } => {
+  // https://img.youtube.com/vi/6AKdwmm2ap0/maxresdefault.jpg
+  const imageOrVideo = nodes.find((n) => n.type === 'image' || n.type === 'video') as ImageNode;
+  if (imageOrVideo.type === 'image') {
+    return {
+      ...imageOrVideo,
+      url: imageOrVideo.data,
+    };
+  }
+
+  return {
+    ...imageOrVideo,
+    url: `https://img.youtube.com/vi/${imageOrVideo.data}/maxresdefault.jpg`,
+  };
+};
+
+const generateHTML = (queryRes: AnyOk) => {
   const hit: Hit = queryRes.hits[0] as Hit;
   const { metadata, content } = hit;
   const extensions = flattenKV(metadata.extensions, 'key', 'value');
   const annotations = flattenKV(metadata.annotations, 'name', 'uri');
-  const image = content.body.find((n) => n.type === 'image') as ImageNode;
+  const image = getOgImage(content.body);
 
   const opts: TemplateOptions = {
     meta: {
@@ -245,40 +152,4 @@ const generateHTML = (queryRes: any) => {
   return template(opts);
 };
 
-const Content: Route = async (request, ctx) => {
-  const { env, log } = ctx;
-  log.debug('[Content]');
-
-  const url = new URL(request.url);
-  const path = url.pathname + url.search;
-  const queryUrl = `${env.CONTENT_ENDPOINT}${path}`;
-  const query = makeQueryJSON(queryUrl);
-
-  let resp = await fetch(`${env.API_ENDPOINT}/content-reader/v3/content/search`, {
-    headers: {
-      app_key: env.API_KEY,
-      'content-type': 'application/json',
-    },
-    method: 'POST',
-    body: query,
-  });
-
-  if (!resp.ok) {
-    return new Response('error', { status: resp.status });
-  }
-
-  const respBody = await resp.json();
-  if (typeof respBody !== 'object' || !(respBody as Record<string, string>)?.results) {
-    return new Response('Not found', { status: 404 });
-  }
-
-  resp = new Response(generateHTML(respBody), {
-    status: 200,
-    headers: {
-      'content-type': 'text/html; charset=utf-8',
-    },
-  });
-  return resp;
-};
-
-export default Content;
+export default generateHTML;

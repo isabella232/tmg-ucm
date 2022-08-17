@@ -20,7 +20,10 @@ import { config } from 'dotenv';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-config();
+config({ path: path.resolve(__dirname, './.env') });
+
+process.env.NODE_ENV ??= 'development';
+const dev = process.env.NODE_ENV === 'development';
 
 try {
   await build({
@@ -29,14 +32,11 @@ try {
     format: 'esm',
     target: 'esnext',
     define: {
-      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV ?? 'development'),
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.PLATFORM': JSON.stringify(process.env.PLATFORM ?? 'cf'),
-      ...(
-        process.env.NODE_ENV === 'development' ? {
-          'env.API_KEY': JSON.stringify(process.env.API_KEY),
-        } : {}),
+      'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
     },
-    minify: true,
+    minify: !dev,
     treeShaking: true,
     external: ['__STATIC_CONTENT_MANIFEST'],
     conditions: ['worker', 'browser'],

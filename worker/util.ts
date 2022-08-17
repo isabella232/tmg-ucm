@@ -10,17 +10,15 @@
  * governing permissions and limitations under the License.
  */
 
-import { Router } from 'itty-router';
-import type { Context } from './types';
-
-import Helix from './routes/helix';
-import Content from './routes/content';
-
-const router = Router();
-
-router
-  .get('/+(nav|footer).plain.html', Helix)
-  .get('/*.+(png|svg|jpg|css|js)', Helix)
-  .get('/*', Content);
-
-export default (request: Request, ctx: Context) => router.handle(request, ctx) as Promise<Response>;
+// eslint-disable-next-line import/prefer-default-export
+export const flattenKV = (
+  arr: Record<string, string>[],
+  keyKey: string,
+  valKey: string,
+): Record<string, string> => {
+  const obj = {};
+  arr.forEach((a) => {
+    obj[a[keyKey]] = a[valKey];
+  });
+  return obj;
+};

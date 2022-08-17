@@ -11,8 +11,8 @@
     "lint": "npm run lint:js && npm run lint:css",
     "deploy": "wrangler publish --env production",
     "build": "node ./worker/build.mjs",
-    "dev": "miniflare --live-reload --debug --modules worker/dist/index.mjs",
-    "dev:remote": "wrangler dev"
+    "dev": "NODE_ENV=development miniflare --live-reload --debug --modules worker/dist/index.mjs",
+    "dev:remote": "NODE_ENV=development wrangler dev"
   },
   "repository": {
     "type": "git",
