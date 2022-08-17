@@ -60,7 +60,7 @@ const template = ({
         <meta name="publication-date" content="${meta.createdDate}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta property="og:type" content="${meta.type}">
-        <meta property="og:site_name" content="The Telehgraph">
+        <meta property="og:site_name" content="The Telegraph">
         <meta name="twitter:site" content="${extensions.twitterSite}">
         <meta name="twitter:creator" content="${extensions.twitterSite}">
         <meta name="twitter:card" content="summary_large_image">
@@ -70,6 +70,7 @@ const template = ({
         <link rel="icon" href="data:,">
     </head>
     <body>
+      <div>
         <header>
         </header>
         <main>
@@ -93,6 +94,7 @@ ${
           ${content}
         </main>
         <footer></footer>
+      </div>
     </body>
 </html>`;
 };
