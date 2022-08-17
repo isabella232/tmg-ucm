@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/hlxsites/tmg-ucm/compare/v1.0.1...v1.0.2) (2022-08-17)
+
+
+### Bug Fixes
+
+* more blocks, template fix ([1cc4b34](https://github.com/hlxsites/tmg-ucm/commit/1cc4b3490a5f86b132a85ec4f6beb3b9740cc975))
+
 ## [1.0.1](https://github.com/hlxsites/tmg-ucm/compare/v1.0.0...v1.0.1) (2022-08-17)
 
 
