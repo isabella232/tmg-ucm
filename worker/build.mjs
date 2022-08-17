@@ -15,9 +15,12 @@
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { build } from 'esbuild';
+import { config } from 'dotenv';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+config();
 
 try {
   await build({
@@ -28,6 +31,10 @@ try {
     define: {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV ?? 'development'),
       'process.env.PLATFORM': JSON.stringify(process.env.PLATFORM ?? 'cf'),
+      ...(
+        process.env.NODE_ENV === 'development' ? {
+          API_KEY: JSON.stringify(process.env.API_KEY),
+        } : {}),
     },
     minify: true,
     treeShaking: true,

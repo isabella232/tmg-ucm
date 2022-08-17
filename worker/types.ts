@@ -15,7 +15,9 @@ export interface Invocation {
 }
 
 export interface Env {
-  [key: string]: string;
+  UPSTREAM: string;
+  API_ENDPOINT: string;
+  CONTENT_ENDPOINT: string;
 }
 
 export interface Context {

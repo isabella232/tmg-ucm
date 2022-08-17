@@ -13,25 +13,21 @@
 import type { Route } from '../types';
 
 const Helix: Route = async (request, ctx) => {
-  const { env } = ctx;
+  const { env, log } = ctx;
 
   const url = new URL(request.url);
-  url.hostname = env.ORIGIN_HOSTNAME;
-  const req = new Request(url.toString(), request);
+  const upstream = `${env.UPSTREAM}${url.pathname}${url.search}`;
+
+  log.debug('[Helix] fetching: ', upstream);
+
+  const req = new Request(upstream, request);
   if (req.headers.has('host')) {
     req.headers.set('x-forwarded-host', req.headers.get('host'));
   }
 
-  // TODO: set the following header if push invalidation is configured
-  // (see https://www.hlx.live/docs/setup-byo-cdn-push-invalidation#cloudflare)
-  // req.headers.set('x-push-invalidation', 'enabled');
-  let resp = await fetch(req, {
-    cf: {
-      // cf doesn't cache html by default: need to override the default behavior
-      cacheEverything: true,
-    },
-  });
+  let resp = await fetch(req);
   resp = new Response(resp.body, resp);
+  resp.headers.set('access-control-allow-origin', '*');
   resp.headers.delete('age');
   resp.headers.delete('x-robots-tag');
   return resp;

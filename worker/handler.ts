@@ -21,6 +21,10 @@ const router = Router();
 router
   .get('/scripts/*.js', Helix)
   .get('/styles/*.css', Helix)
+  .get('/blocks/*.js', Helix)
+  .get('/blocks/*.css', Helix)
+  .get('/nav.plain.html', Helix)
+  .get('/footer.plain.html', Helix)
   .get('/*', Content);
 
 export default (request: Request, ctx: Context) => router.handle(request, ctx) as Promise<Response>;

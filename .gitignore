@@ -3,5 +3,6 @@ coverage/*
 logs/*
 node_modules/*
 
+.env
 helix-importer-ui
 worker/dist/

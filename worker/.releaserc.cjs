@@ -22,7 +22,7 @@ module.exports = {
         message: 'chore(release): ${nextRelease.version} [skip ci]\n\n${nextRelease.notes}',
       },
     ],
-    // package plugin, deploy service
+    // deploy worker
     [
       '@semantic-release/exec',
       {

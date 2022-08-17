@@ -8,8 +8,9 @@ compatibility_date = "2022-06-13"
 compatibility_flags = []
 
 [build]
-command = "NODE_ENV=development npm run build"
-watch_dir = "./worker"
+command = "NODE_ENV=development node ./build.mjs"
+cwd = "worker"
+watch_dir = "worker/routes"
 
 
 [env.stage.build]
@@ -20,17 +21,20 @@ command = "NODE_ENV=production npm run build"
 
 
 [vars]
-UPSTREAM = "http://localhost:3000"
+UPSTREAM = "https://main--tmg-ucm--hlxsites.hlx.live"
+API_ENDPOINT = "https://api.telegraph.co.uk"
+CONTENT_ENDPOINT = "https://www.telegraph.co.uk"
 
 [env.stage.vars]
 UPSTREAM = "https://main--tmg-ucm--hlxsites.hlx.live"
+API_ENDPOINT = "https://api.telegraph.co.uk"
+CONTENT_ENDPOINT = "https://www.telegraph.co.uk"
 
 [env.production.vars]
 UPSTREAM = "https://main--tmg-ucm--hlxsites.hlx.live"
-
+API_ENDPOINT = "https://api.telegraph.co.uk"
+CONTENT_ENDPOINT = "https://www.telegraph.co.uk"
 
 # The necessary secrets are:
-# - GOOGLE_CLIENT_SECRET
-# - GOOGLE_DEVICECODE_CLIENT_SECRET
-# - MICROSOFT_CLIENT_SECRET
+# - API_KEY
 # Run `wrangler secret put <NAME> <VALUE>` for each of these
