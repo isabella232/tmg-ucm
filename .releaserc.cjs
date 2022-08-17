@@ -25,7 +25,7 @@ module.exports = {
     [
       '@semantic-release/exec',
       {
-        prepareCmd: "echo 'deploy worker' && npm run deploy:worker",
+        prepareCmd: "echo 'deploy worker' && npm run deploy",
       },
     ],
   ],
