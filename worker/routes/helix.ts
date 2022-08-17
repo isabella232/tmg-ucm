@@ -25,7 +25,7 @@ const Helix: Route = async (request, ctx) => {
     req.headers.set('x-forwarded-host', req.headers.get('host'));
   }
 
-  let resp = await fetch(req);
+  let resp = await fetch(req, { cf: { cacheTtl: 60 } });
   resp = new Response(resp.body, resp);
   resp.headers.set('access-control-allow-origin', '*');
   resp.headers.delete('age');
