@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/hlxsites/tmg-ucm/compare/v1.0.0...v1.0.1) (2022-08-17)
+
+
+### Bug Fixes
+
+* helix caching, template ([5e09eda](https://github.com/hlxsites/tmg-ucm/commit/5e09eda36dc40af89d9cd43c7aeba12ffdd61e5a))
+
 # 1.0.0 (2022-08-17)
 
 
