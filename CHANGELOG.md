@@ -1,3 +1,10 @@
+## [1.0.4](https://github.com/hlxsites/tmg-ucm/compare/v1.0.3...v1.0.4) (2022-08-18)
+
+
+### Bug Fixes
+
+* add auth ([8a4ea71](https://github.com/hlxsites/tmg-ucm/commit/8a4ea717d977f043da16e23ca539b3d92df5160e))
+
 ## [1.0.3](https://github.com/hlxsites/tmg-ucm/compare/v1.0.2...v1.0.3) (2022-08-18)
 
 
