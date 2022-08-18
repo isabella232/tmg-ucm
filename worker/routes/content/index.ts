@@ -43,6 +43,10 @@ const Content: Route = async (request, ctx) => {
   log.debug('[Content]');
 
   const url = new URL(request.url);
+  if (!url.pathname || url.pathname === '/') {
+    return fetch(`${env.CONTENT_ENDPOINT}`);
+  }
+
   const path = url.pathname + url.search;
   const queryUrl = `${env.CONTENT_ENDPOINT}${path}`;
   const query = makeQueryJSON(queryUrl);
