@@ -12,7 +12,7 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import type { Route } from '../../types';
+import type { Context, Route } from '../../types';
 import generateHTML from './transform';
 
 const makeQueryJSON = (url: string): string => {
@@ -38,8 +38,77 @@ const makeQueryJSON = (url: string): string => {
   });
 };
 
+function isAuthenticated(request: Request, ctx: Context): boolean {
+  const { env, log } = ctx;
+
+  const token = request.headers.get('auth_token');
+  if (token && token === env.API_KEY) {
+    return true;
+  }
+
+  const cookieStr = request.headers.get('cookie');
+  if (!cookieStr) {
+    return false;
+  }
+
+  const cookies = cookieStr.split(';').map((s) => s.trim());
+
+  const obj: Record<string, string> = {};
+  cookies.forEach((c) => {
+    const [key, val] = c.split('=');
+    obj[key] = val;
+  });
+
+  if (!obj.auth_token || obj.auth_token !== env.API_KEY) {
+    return false;
+  }
+  return true;
+}
+
+function unauthenticatedTemplate() {
+  return /* html */`<!DOCTYPE html>
+<html>
+  <head>
+    <script>
+      function getToken(){
+        return prompt('Please enter your password:', '');
+      }
+      async function auth(){
+        let token;
+        let retry = true;
+        while(!token && retry) {
+          token = getToken();
+          if(!token) {
+            retry = window.confirm('Invalid password, try again?');
+          }
+        }
+
+        if(token) {
+          await fetch('/auth', { 
+            method: 'POST', 
+            body: JSON.stringify({ token }) 
+          });
+          window.navigation.reload();
+        }
+      }
+    </script>
+  </head>
+  <body onload="auth()">
+</html>`;
+}
+
 const Content: Route = async (request, ctx) => {
   const { env, log } = ctx;
+
+  if (!isAuthenticated(request, ctx)) {
+    return new Response(unauthenticatedTemplate(), {
+      status: 200,
+      headers: {
+        'content-type': 'text/html; charset=utf-8',
+      },
+    });
+  }
+
   log.debug('[Content]');
 
   const url = new URL(request.url);
