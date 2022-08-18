@@ -1,3 +1,11 @@
+## [1.0.3](https://github.com/hlxsites/tmg-ucm/compare/v1.0.2...v1.0.3) (2022-08-18)
+
+
+### Bug Fixes
+
+* author block ([f8d0fa3](https://github.com/hlxsites/tmg-ucm/commit/f8d0fa32e74edfb51c9ac97e43d6761c94db4059))
+* cache generation env var ([c211075](https://github.com/hlxsites/tmg-ucm/commit/c211075555bbb47058048221158ab7da4dea93ee))
+
 ## [1.0.2](https://github.com/hlxsites/tmg-ucm/compare/v1.0.1...v1.0.2) (2022-08-17)
 
 
