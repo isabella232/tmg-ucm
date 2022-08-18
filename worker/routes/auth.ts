@@ -10,19 +10,17 @@
  * governing permissions and limitations under the License.
  */
 
-import { Router } from 'itty-router';
-import type { Context } from './types';
+import type { Route } from '../types';
 
-import Helix from './routes/helix';
-import Content from './routes/content';
-import Auth from './routes/auth';
+const Auth: Route = async (request, ctx) => {
+  const { env, log } = ctx;
+  const json: Record<string, string> = await request.json();
+  const { token } = json;
+  if (!token || token.trim() !== env.API_KEY) {
+    log.warn('Not authorized: ', token);
+    return new Response('Not authorized', { status: 401 });
+  }
+  return new Response('Ok', { headers: { 'set-cookie': `auth_token=${token}` } });
+};
 
-const router = Router();
-
-router
-  .get('/+(nav|footer).plain.html', Helix)
-  .get('/*.+(png|svg|jpg|css|js)', Helix)
-  .post('/auth', Auth)
-  .get('/*', Content);
-
-export default (request: Request, ctx: Context) => router.handle(request, ctx) as Promise<Response>;
+export default Auth;
