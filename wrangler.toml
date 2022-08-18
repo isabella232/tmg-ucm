@@ -40,4 +40,5 @@ CACHE_GEN = 0
 
 # The necessary secrets are:
 # - API_KEY
+# - UI_PASSWORD
 # Run `wrangler secret put <NAME> <VALUE>` for each of these
