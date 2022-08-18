@@ -22,6 +22,7 @@ export interface Env {
   API_ENDPOINT: string;
   CONTENT_ENDPOINT: string;
   API_KEY: string;
+  CACHE_GEN: string;
 }
 
 export interface Context {
