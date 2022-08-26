@@ -1,3 +1,10 @@
+## [1.0.5](https://github.com/hlxsites/tmg-ucm/compare/v1.0.4...v1.0.5) (2022-08-26)
+
+
+### Bug Fixes
+
+* differentiate password from api key ([f295dad](https://github.com/hlxsites/tmg-ucm/commit/f295dad651ecd4a146d47c257edcc2bad4ff79e4))
+
 ## [1.0.4](https://github.com/hlxsites/tmg-ucm/compare/v1.0.3...v1.0.4) (2022-08-18)
 
 
