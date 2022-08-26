@@ -15,9 +15,16 @@ import type { Route, Context } from '../types';
 export function isAuthenticated(request: Request, ctx: Context): boolean {
   const { env } = ctx;
 
-  const token = request.headers.get('auth_token');
-  if (token && token === env.UI_PASSWORD) {
-    return true;
+  const authHeader = request.headers.get('authorization');
+  if (authHeader) {
+    const spl = authHeader.split(' ');
+    const scheme = spl.shift();
+    if (scheme && (scheme.toLowerCase() === 'basic' || scheme.toLowerCase() === 'key')) {
+      const key = spl.join(' ');
+      if (key === env.UI_PASSWORD) {
+        return true;
+      }
+    }
   }
 
   const cookieStr = request.headers.get('cookie');
@@ -33,7 +40,7 @@ export function isAuthenticated(request: Request, ctx: Context): boolean {
     obj[key] = val;
   });
 
-  if (!obj.auth_token || obj.auth_token !== env.UI_PASSWORD) {
+  if (!obj.auth_key || obj.auth_key !== env.UI_PASSWORD) {
     return false;
   }
   return true;
@@ -44,23 +51,23 @@ export function unauthenticatedTemplate() {
 <html>
   <head>
     <script>
-      function getToken(){
+      function getKey(){
         return prompt('Please enter your password:', '');
       }
       async function auth(){
-        let token;
+        let key;
         let retry = true;
-        while(!token && retry) {
-          token = getToken();
-          if(!token) {
+        while(!key && retry) {
+          key = getKey();
+          if(!key) {
             retry = window.confirm('Invalid password, try again?');
           }
         }
 
-        if(token) {
+        if(key) {
           await fetch('/auth', { 
             method: 'POST', 
-            body: JSON.stringify({ token }) 
+            body: JSON.stringify({ key }) 
           });
           window.navigation.reload();
         }
@@ -82,12 +89,12 @@ export function unauthenticatedResponse() {
 const Auth: Route = async (request, ctx) => {
   const { env, log } = ctx;
   const json: Record<string, string> = await request.json();
-  const { token } = json;
-  if (!token || token.trim() !== env.UI_PASSWORD) {
-    log.warn('Not authorized: ', token);
+  const { auth_key: key } = json;
+  if (!key || key.trim() !== env.UI_PASSWORD) {
+    log.warn('Not authorized: ', key);
     return new Response('Not authorized', { status: 401 });
   }
-  return new Response('Ok', { headers: { 'set-cookie': `auth_token=${token}` } });
+  return new Response('Ok', { headers: { 'set-cookie': `auth_key=${key}` } });
 };
 
 export default Auth;
