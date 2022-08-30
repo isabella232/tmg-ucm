@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/hlxsites/tmg-ucm/compare/v1.1.0...v1.1.1) (2022-08-30)
+
+
+### Bug Fixes
+
+* fix kv var name ([54ce539](https://github.com/hlxsites/tmg-ucm/commit/54ce539adf64f2eff6cd926881d0ce68d05dbbc2))
+
 # [1.1.0](https://github.com/hlxsites/tmg-ucm/compare/v1.0.5...v1.1.0) (2022-08-30)
 
 
