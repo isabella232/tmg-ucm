@@ -35,16 +35,23 @@ try {
       'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
       'process.env.PLATFORM': JSON.stringify(process.env.PLATFORM ?? 'cf'),
       'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
+      'process.env.UI_KEY': JSON.stringify(process.env.UI_KEY),
+      'process.env.UI_PASSWORD': JSON.stringify(process.env.UI_PASSWORD),
+      'process.env.JWT_KEY': JSON.stringify(process.env.JWT_KEY),
       'process.env.UPSTREAM': dev && process.env.UPSTREAM ? JSON.stringify(process.env.UPSTREAM) : '""',
+    },
+    loader: {
+      '.html': 'text',
+      '.text.js': 'text',
     },
     minify: !dev,
     treeShaking: true,
     external: ['__STATIC_CONTENT_MANIFEST'],
     conditions: ['worker', 'browser'],
-    entryPoints: [path.join(__dirname, 'index.ts')],
-    outdir: path.join(__dirname, 'dist'),
+    entryPoints: [path.resolve(__dirname, 'src/index.ts')],
+    outdir: path.resolve(__dirname, 'dist'),
     outExtension: { '.js': '.mjs' },
-    tsconfig: path.join(__dirname, './tsconfig.json'),
+    tsconfig: path.resolve(__dirname, './tsconfig.json'),
   });
 } catch {
   process.exitCode = 1;

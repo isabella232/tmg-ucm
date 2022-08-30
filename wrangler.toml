@@ -6,11 +6,24 @@ workers_dev = true
 
 compatibility_date = "2022-06-13"
 compatibility_flags = []
+kv_namespaces = [
+  { binding = "REVOKED_SESSIONS", id = "4ec8d65764e44b709fc0e4d5f37bcb93" }
+]
+
+[env.stage]
+kv_namespaces = [
+  { binding = "REVOKED_SESSIONS", id = "4ec8d65764e44b709fc0e4d5f37bcb93" }
+]
+
+[env.production]
+kv_namespaces = [
+  { binding = "REVOKED_SESSIONS", id = "4ec8d65764e44b709fc0e4d5f37bcb93" }
+]
 
 [build]
 command = "NODE_ENV=development node ./build.mjs"
 cwd = "worker"
-watch_dir = "worker/routes"
+watch_dir = "worker/src"
 
 
 [env.stage.build]
@@ -41,4 +54,6 @@ CACHE_GEN = 0
 # The necessary secrets are:
 # - API_KEY
 # - UI_PASSWORD
-# Run `wrangler secret put <NAME> <VALUE>` for each of these
+# - UI_KEY
+# - JWT_KEY
+# Run `wrangler secret put <NAME>` for each of these

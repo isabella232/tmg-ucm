@@ -1,0 +1,11 @@
+@import "/blocks/form/form.css";
+
+main .form>span.hint,
+main .form .field-wrapper span.hint {
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  font-size: var(--body-font-size-xs);
+  transform: translateY(50%);
+  color: var(--warn-color);
+}

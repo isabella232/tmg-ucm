@@ -10,26 +10,24 @@
  * governing permissions and limitations under the License.
  */
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type AnyOk = any;
+import type { Context, Route } from '../../types';
+import { isAuthenticated } from './validate';
 
-export interface Invocation {
-  requestId: string;
+export function unauthenticatedResponse(ctx: Context) {
+  return new Response('', {
+    status: 302,
+    headers: {
+      location: `/auth${ctx.url.pathname ? `#${encodeURIComponent(ctx.url.pathname)}` : ''}`,
+      'set-cookie': 'token=;max-age=-1;',
+    },
+  });
 }
 
-export interface Env {
-  UPSTREAM: string;
-  API_ENDPOINT: string;
-  CONTENT_ENDPOINT: string;
-  API_KEY: string;
-  UI_PASSWORD: string;
-  CACHE_GEN: string;
-}
+export const needsAuth: Route = async (request, ctx) => {
+  const ok = await isAuthenticated(request, ctx);
+  if (!ok) {
+    return unauthenticatedResponse(ctx);
+  }
 
-export interface Context {
-  log: typeof console;
-  env: Env;
-  invocation: Invocation;
-}
-
-export type Route = (req: Request, ctx: Context) => Promise<Response>;
+  return undefined;
+};

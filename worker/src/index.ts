@@ -20,6 +20,9 @@ const setupEnv = (env: Env): Env => {
   }
 
   env.API_KEY = process.env.API_KEY;
+  env.JWT_KEY = process.env.JWT_KEY;
+  env.UI_KEY = process.env.UI_KEY;
+  env.UI_PASSWORD = process.env.UI_PASSWORD;
 
   if (process.env.UPSTREAM) {
     env.UPSTREAM = process.env.UPSTREAM;
@@ -37,6 +40,7 @@ export default {
       invocation: {
         requestId,
       },
+      url: new URL(request.url),
     };
 
     let resp = await handleRequest(request, ctx);
