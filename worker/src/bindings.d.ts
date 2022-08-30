@@ -1,9 +1,4 @@
-/// <reference types="@cloudflare/workers-types" />
-
 declare global {
-  // KV namespaces
-  export const REVOKED_SESSIONS: KVNamespace<string>;
-
   export interface Process {
     env: {
       NODE_ENV: 'development' | 'production';

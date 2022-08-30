@@ -32,6 +32,9 @@ export interface Env {
   UI_PASSWORD: string;
   UI_KEY: string;
   JWT_KEY: string;
+
+  // KV namespaces
+  REVOKED_SESSIONS: KVNamespace<string>;
 }
 
 export interface Context {
