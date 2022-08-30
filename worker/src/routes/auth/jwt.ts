@@ -58,6 +58,11 @@ export async function isJWTValid(jwt: string, env: Env): Promise<boolean> {
     return false;
   }
 
+  const revoked = await REVOKED_TOKENS.get(jwt);
+  if (revoked) {
+    return false;
+  }
+
   const header = JSON.parse(atob(eHeader)) as JWTHeader;
   const payload = JSON.parse(atob(ePayload)) as JWTPayload;
   if (header.alg !== ALG || header.typ !== TYP) {

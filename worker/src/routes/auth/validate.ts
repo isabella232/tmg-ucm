@@ -30,7 +30,6 @@ function authenticateBasic(encoded: string, env: Env): boolean {
  * 2. not revoked
  * 3. valid signature
  */
-// eslint-disable-next-line @typescript-eslint/require-await
 export async function authenticateToken(jwt: string, env: Env): Promise<boolean> {
   return isJWTValid(jwt, env);
 }
