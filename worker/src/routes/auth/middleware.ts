@@ -17,7 +17,7 @@ export function unauthenticatedResponse(ctx: Context) {
   return new Response('', {
     status: 302,
     headers: {
-      location: `/auth#${encodeURIComponent(ctx.url.pathname)}`,
+      location: `/auth${ctx.url.pathname ? `#${encodeURIComponent(ctx.url.pathname)}` : ''}`,
       'set-cookie': 'token=;max-age=-1;',
     },
   });
