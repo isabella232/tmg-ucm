@@ -14,10 +14,12 @@ import type { Context, Route } from '../../types';
 import { isAuthenticated } from './validate';
 
 export function unauthenticatedResponse(ctx: Context) {
+  const path = ctx.url.pathname;
+  const hasPath = path.length > 1;
   return new Response('', {
     status: 302,
     headers: {
-      location: `/auth${ctx.url.pathname ? `#${encodeURIComponent(ctx.url.pathname)}` : ''}`,
+      location: `/auth${hasPath ? `#${encodeURIComponent(path)}` : ''}`,
       'set-cookie': 'token=;max-age=-1;',
     },
   });
