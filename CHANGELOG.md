@@ -1,3 +1,10 @@
+## [1.1.2](https://github.com/hlxsites/tmg-ucm/compare/v1.1.1...v1.1.2) (2022-08-30)
+
+
+### Bug Fixes
+
+* module syntax for kvnamespaces ([681c5f3](https://github.com/hlxsites/tmg-ucm/commit/681c5f3694747969fd6306c04c2d0030f566eeef))
+
 ## [1.1.1](https://github.com/hlxsites/tmg-ucm/compare/v1.1.0...v1.1.1) (2022-08-30)
 
 
