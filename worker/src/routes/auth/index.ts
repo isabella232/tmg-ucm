@@ -65,7 +65,7 @@ const logout: Route = async (request, ctx) => {
   }
 
   const payload = decodeJWTPayload(token);
-  await REVOKED_TOKENS.put(token, 'true', { expiration: payload.exp });
+  await REVOKED_SESSIONS.put(token, 'true', { expiration: payload.exp });
   return new Response('ok', { status: 200 });
 };
 

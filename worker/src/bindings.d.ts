@@ -2,7 +2,7 @@
 
 declare global {
   // KV namespaces
-  export const REVOKED_TOKENS: KVNamespace<string>;
+  export const REVOKED_SESSIONS: KVNamespace<string>;
 
   export interface Process {
     env: {
