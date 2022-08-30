@@ -1,3 +1,18 @@
+# [1.1.0](https://github.com/hlxsites/tmg-ucm/compare/v1.0.5...v1.1.0) (2022-08-30)
+
+
+### Bug Fixes
+
+* add revoked_sessions kv namespace ([6dceffe](https://github.com/hlxsites/tmg-ucm/commit/6dceffe1b32c6a425bf5fe0bb5eaec147bc83d36))
+* check revoked tokens ([076612a](https://github.com/hlxsites/tmg-ucm/commit/076612a750469e65004ef9b06cf19ae3c2bcd2d5))
+* redirect hash ([f11de01](https://github.com/hlxsites/tmg-ucm/commit/f11de015cd21b1d445a4f25e323d616f481e6306))
+* use authorization header ([d535320](https://github.com/hlxsites/tmg-ucm/commit/d535320102ba5de8ad07edc20ab87304d8c0c5a8))
+
+
+### Features
+
+* bearer/basic auth, auth ui, login-form block ([4c1d5da](https://github.com/hlxsites/tmg-ucm/commit/4c1d5daeeb8f5a66debd9f82578f17cbf7bad98a))
+
 ## [1.0.5](https://github.com/hlxsites/tmg-ucm/compare/v1.0.4...v1.0.5) (2022-08-26)
 
 

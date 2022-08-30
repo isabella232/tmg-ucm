@@ -1,7 +1,7 @@
 {
   "name": "@hlxsites/tmg-ucm",
   "private": true,
-  "version": "1.0.5",
+  "version": "1.1.0",
   "description": "TMG",
   "scripts": {
     "test": "wtr \"./test/**/*.test.js\" --node-resolve --port=2000 --coverage",
