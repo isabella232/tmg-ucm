@@ -15,14 +15,15 @@ import type { Context } from './types';
 
 import Helix from './routes/helix';
 import Content from './routes/content';
-import Auth from './routes/auth';
+import { AuthAPI, AuthUI, needsAuth } from './routes/auth';
 
-const router = Router();
+const router = Router<Request>();
 
 router
+  .post('/api/auth/*', AuthAPI)
+  .get('/auth/*', AuthUI)
   .get('/+(nav|footer).plain.html', Helix)
   .get('/*.+(png|svg|jpg|css|js)', Helix)
-  .post('/auth', Auth)
-  .get('/*', Content);
+  .get('/*', needsAuth, Content);
 
 export default (request: Request, ctx: Context) => router.handle(request, ctx) as Promise<Response>;

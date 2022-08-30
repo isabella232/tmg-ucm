@@ -10,7 +10,7 @@ compatibility_flags = []
 [build]
 command = "NODE_ENV=development node ./build.mjs"
 cwd = "worker"
-watch_dir = "worker/routes"
+watch_dir = "worker/src"
 
 
 [env.stage.build]
@@ -41,4 +41,6 @@ CACHE_GEN = 0
 # The necessary secrets are:
 # - API_KEY
 # - UI_PASSWORD
-# Run `wrangler secret put <NAME> <VALUE>` for each of these
+# - UI_KEY
+# - JWT_KEY
+# Run `wrangler secret put <NAME>` for each of these

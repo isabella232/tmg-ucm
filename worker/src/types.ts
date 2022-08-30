@@ -10,8 +10,14 @@
  * governing permissions and limitations under the License.
  */
 
+/// <reference types="@cloudflare/workers-types" />
+
+// import { RouteHandler } from 'itty-router';
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export type AnyOk = any;
+
+export type HTTPMethod = 'GET' | 'POST' | 'PUT' | 'PATCH' | 'HEAD' | 'OPTIONS' | 'DELETE';
 
 export interface Invocation {
   requestId: string;
@@ -22,14 +28,20 @@ export interface Env {
   API_ENDPOINT: string;
   CONTENT_ENDPOINT: string;
   API_KEY: string;
-  UI_PASSWORD: string;
   CACHE_GEN: string;
+  UI_PASSWORD: string;
+  UI_KEY: string;
+  JWT_KEY: string;
 }
 
 export interface Context {
   log: typeof console;
   env: Env;
   invocation: Invocation;
+  url: URL;
 }
 
-export type Route = (req: Request, ctx: Context) => Promise<Response>;
+export type Route = (
+  req: Request,
+  ctx: Context
+) => Promise<Response | undefined> | Response | undefined;

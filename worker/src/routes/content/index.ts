@@ -13,7 +13,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import type { Route } from '../../types';
-import { isAuthenticated, unauthenticatedResponse } from '../auth';
 import generateHTML from './transform';
 
 const makeQueryJSON = (url: string): string => {
@@ -41,10 +40,6 @@ const makeQueryJSON = (url: string): string => {
 
 const Content: Route = async (request, ctx) => {
   const { env, log } = ctx;
-
-  if (!isAuthenticated(request, ctx)) {
-    return unauthenticatedResponse();
-  }
 
   log.debug('[Content]');
 
