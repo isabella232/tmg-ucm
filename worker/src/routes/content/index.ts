@@ -12,7 +12,8 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import type { Route } from '../../types';
+import type { Context, Route } from '../../types';
+import { homeHandler } from './rewriters';
 import generateHTML from './transform';
 
 const makeQueryJSON = (url: string): string => {
@@ -38,6 +39,15 @@ const makeQueryJSON = (url: string): string => {
   });
 };
 
+const fetchIndex = async (ctx: Context): Promise<Response> => {
+  const { env, log } = ctx;
+  const res = await fetch(`${env.CONTENT_ENDPOINT}`);
+  if (!res.ok) {
+    return res;
+  }
+  return homeHandler(ctx).transform(res);
+};
+
 const Content: Route = async (request, ctx) => {
   const { env, log } = ctx;
 
@@ -45,7 +55,7 @@ const Content: Route = async (request, ctx) => {
 
   const url = new URL(request.url);
   if (!url.pathname || url.pathname === '/') {
-    return fetch(`${env.CONTENT_ENDPOINT}`);
+    return fetchIndex(ctx);
   }
 
   const path = url.pathname + url.search;

@@ -42,6 +42,7 @@ export interface Context {
   env: Env;
   invocation: Invocation;
   url: URL;
+  rewriter: HTMLRewriter;
 }
 
 export type Route = (

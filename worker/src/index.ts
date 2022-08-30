@@ -41,6 +41,7 @@ export default {
         requestId,
       },
       url: new URL(request.url),
+      rewriter: new HTMLRewriter(),
     };
 
     let resp = await handleRequest(request, ctx);
