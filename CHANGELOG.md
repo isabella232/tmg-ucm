@@ -1,3 +1,10 @@
+## [1.1.3](https://github.com/hlxsites/tmg-ucm/compare/v1.1.2...v1.1.3) (2022-08-30)
+
+
+### Bug Fixes
+
+* redirect hash ([f7f467c](https://github.com/hlxsites/tmg-ucm/commit/f7f467c6d45f054674d2f193e49cda2afd299418))
+
 ## [1.1.2](https://github.com/hlxsites/tmg-ucm/compare/v1.1.1...v1.1.2) (2022-08-30)
 
 
