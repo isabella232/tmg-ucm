@@ -6,6 +6,19 @@ workers_dev = true
 
 compatibility_date = "2022-06-13"
 compatibility_flags = []
+kv_namespaces = [
+  { binding = "REVOKED_SESSIONS", id = "4ec8d65764e44b709fc0e4d5f37bcb93" }
+]
+
+[env.stage]
+kv_namespaces = [
+  { binding = "REVOKED_SESSIONS", id = "4ec8d65764e44b709fc0e4d5f37bcb93" }
+]
+
+[env.production]
+kv_namespaces = [
+  { binding = "REVOKED_SESSIONS", id = "4ec8d65764e44b709fc0e4d5f37bcb93" }
+]
 
 [build]
 command = "NODE_ENV=development node ./build.mjs"
