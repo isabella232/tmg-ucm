@@ -58,7 +58,7 @@ export async function isJWTValid(jwt: string, env: Env): Promise<boolean> {
     return false;
   }
 
-  const revoked = await REVOKED_SESSIONS.get(jwt);
+  const revoked = await env.REVOKED_SESSIONS.get(jwt);
   if (revoked) {
     return false;
   }
