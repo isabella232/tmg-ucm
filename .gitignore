@@ -6,3 +6,4 @@ node_modules/*
 .env
 helix-importer-ui
 worker/dist/
+.DS_Store

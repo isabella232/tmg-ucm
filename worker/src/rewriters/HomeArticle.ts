@@ -10,7 +10,6 @@
  * governing permissions and limitations under the License.
  */
 
-import { DeepObjectKeys } from '../types';
 import type { AsyncKeySetter } from './util';
 import { asyncKeySetter } from './util';
 
@@ -23,6 +22,7 @@ export interface HomeAuthor {
 export interface HomeArticleMeta {
   live: boolean;
   rating?: string;
+  /** @note not handled - not specific enough in DOM */
   quote: boolean;
 }
 
@@ -79,7 +79,7 @@ export class HomeArticle {
 
   public url = '';
 
-  public headline = '';
+  private _headline = '';
 
   public standfirst?: string;
 
@@ -94,6 +94,17 @@ export class HomeArticle {
     rating: '',
     quote: false,
   };
+
+  public get headline(): string {
+    if (this.meta.live && this._headline.substring(0, 4).toLowerCase() === 'live') {
+      return this._headline.substring(4);
+    }
+    return this._headline;
+  }
+
+  public set headline(val: string) {
+    this._headline = val;
+  }
 
   public processElement(e: Element): void {
     const className = e.getAttribute('class');
@@ -124,9 +135,22 @@ export class HomeArticle {
         this.url = url;
       }
     } else if (e.tagName === 'span') {
+      if (className && className.includes('label-live')) {
+        this.meta.live = true;
+      } else {
+        const itemtype = e.getAttribute('itemtype');
+        if (itemtype && itemtype === 'https://schema.org/Person') {
+          this.setKey(e, 'author.name');
+        } else if (itemtype) {
+          console.warn('[span] UNHANDLED SCHEMA: ', itemtype, className);
+        }
+      }
+    } else if (e.tagName === 'div') {
       const itemtype = e.getAttribute('itemtype');
-      if (itemtype && itemtype === 'https://schema.org/Person') {
-        this.setKey(e, 'author.name');
+      if (itemtype && itemtype === 'https://schema.org/Rating') {
+        this.setKey(e, 'meta.rating');
+      } else if (itemtype) {
+        console.warn('[div] UNHANDLED SCHEMA: ', itemtype, className);
       }
     }
   }

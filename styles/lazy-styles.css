@@ -1,1 +1,24 @@
 /* below the fold CSS goes here */
+
+@font-face {
+  font-family: "Austin News";
+  src: url("/fonts/austin-news-uprights-vf-basic-web.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Telesans Text Regular";
+  src: url("/fonts/Telesans-Text-Web-Regular.woff2") format("woff2");
+  font-display: swap;
+  font-weight: 400;
+}
+
+@font-face {
+  font-family: "Austin News Headline Roman";
+  src: url("/fonts/Austin-News-Headline-Cond-Roman.woff2") format("woff2");
+  font-display: swap;
+  font-style: normal;
+  font-weight: 700;
+}

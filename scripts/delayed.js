@@ -5,3 +5,4 @@ import { sampleRUM } from './scripts.js';
 sampleRUM('cwv');
 
 // add more delayed functionality here
+document.dispatchEvent(new Event('loaded-delayed'));
