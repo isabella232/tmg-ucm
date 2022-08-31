@@ -15,12 +15,14 @@ module.exports = {
       rules: {
         'arrow-body-style': 'off',
         'prefer-arrow-callback': 'off',
+        'no-use-before-define': 'off',
         '@typescript-eslint/no-misused-promises': [
           'error',
           {
             checksVoidReturn: false,
           },
         ],
+        'no-underscore-dangle': 'off',
       },
       settings: {
         'import/resolver': {
