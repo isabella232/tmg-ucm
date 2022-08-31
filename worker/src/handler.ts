@@ -11,7 +11,7 @@
  */
 
 import { Router } from 'itty-router';
-import type { Context } from './types';
+import type { Context, Route } from './types';
 
 import Helix from './routes/helix';
 import Content from './routes/content';
@@ -19,11 +19,17 @@ import { AuthAPI, AuthUI, needsAuth } from './routes/auth';
 
 const router = Router<Request>();
 
+const fallback: Route = () => {
+  return new Response('Not found', { status: 404 });
+};
+
 router
   .post('/api/auth/*', AuthAPI)
   .get('/auth/*', AuthUI)
   .get('/+(nav|footer).plain.html', Helix)
+  .get('/content/dam/*', needsAuth, Content)
   .get('/*.+(png|svg|jpg|css|js)', Helix)
-  .get('/*', needsAuth, Content);
+  .get('/*', needsAuth, Content)
+  .all('/*', fallback);
 
 export default (request: Request, ctx: Context) => router.handle(request, ctx) as Promise<Response>;
