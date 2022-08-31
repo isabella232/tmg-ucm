@@ -10,9 +10,10 @@
     "lint:css": "stylelint 'blocks/**/*.css' 'styles/*.css'",
     "lint": "npm run lint:js && npm run lint:css",
     "deploy": "wrangler publish --env production",
+    "deploy:stage": "wrangler publish --env stage",
     "build": "node ./worker/build.mjs",
     "dev": "concurrently --kill-others \"hlx up\" \"NODE_ENV=development miniflare --live-reload --debug --modules worker/dist/index.mjs\"",
-    "dev:remote": "NODE_ENV=development UPSTREAM='https://main--tmg-ucm--hlxsites.hlx.live' wrangler dev"
+    "dev:remote": "NODE_ENV=development UPSTREAM='https://main--tmg-ucm--hlxsites.hlx.live' wrangler dev --env stage"
   },
   "repository": {
     "type": "git",

@@ -13,7 +13,7 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
 import type { Context, Route } from '../../types';
-import { homeHandler } from './rewriters';
+import { homeHandler } from '../../rewriters';
 import generateHTML from './transform';
 
 const makeQueryJSON = (url: string): string => {
@@ -45,7 +45,44 @@ const fetchIndex = async (ctx: Context): Promise<Response> => {
   if (!res.ok) {
     return res;
   }
-  return homeHandler(ctx).transform(res);
+  return homeHandler(ctx).transform(
+    new Response(res.body, {
+      headers: {
+        'cache-control': 'max-age=60, must-revalidate',
+        'content-type': 'text/html; charset=utf-8',
+      },
+    }),
+  );
+};
+
+export const fetchImage = async (ctx: Context): Promise<Response> => {
+  const curl = ctx.url;
+
+  const image:RequestInitCfPropertiesImage = {};
+  if (curl.searchParams.has('imwidth')) {
+    image.width = Number.parseInt(curl.searchParams.get('imwidth'), 10);
+  }
+
+  if (curl.searchParams.has('impolicy')) {
+    const policy = curl.searchParams.get('impolicy');
+    if (policy === 'utilities-thumbnail') {
+      image.width = 60;
+    }
+  } else if (curl.searchParams.has('imheight')) {
+    image.height = Number.parseInt(curl.searchParams.get('imheight'), 10);
+  }
+
+  const url = `${ctx.env.CONTENT_ENDPOINT}${curl.pathname}`;
+  const res = await fetch(url, {
+    cf: {
+      image,
+    },
+  });
+  return new Response(res.body, {
+    headers: {
+      'content-type': res.headers.get('content-type'),
+    },
+  });
 };
 
 const Content: Route = async (request, ctx) => {
@@ -56,6 +93,10 @@ const Content: Route = async (request, ctx) => {
   const url = new URL(request.url);
   if (!url.pathname || url.pathname === '/') {
     return fetchIndex(ctx);
+  }
+
+  if (ctx.url.pathname.endsWith('.png') || ctx.url.pathname.endsWith('.jpg') || ctx.url.pathname.endsWith('.jpeg')) {
+    return fetchImage(ctx);
   }
 
   const path = url.pathname + url.search;
@@ -84,6 +125,7 @@ const Content: Route = async (request, ctx) => {
   resp = new Response(generateHTML(respBody), {
     status: 200,
     headers: {
+      'cache-control': 'max-age=60, must-revalidate',
       'content-type': 'text/html; charset=utf-8',
     },
   });

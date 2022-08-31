@@ -159,7 +159,7 @@ function isAuthenticated() {
     const decoded = JSON.parse(atob(payload));
 
     // assume the signature is valid, just check for expiration
-    if (Date.now() > decoded.exp) {
+    if (Date.now() / 1000 > decoded.exp) {
       return removeAuthCookie();
     }
     window.session = decoded;

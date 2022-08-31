@@ -12,10 +12,10 @@
 
 /// <reference types="@cloudflare/workers-types" />
 
-import { Env } from '../../types';
+import { Context, Env } from '../../types';
 import { bufToHex, hexToBuf } from '../../util';
 
-const VALID_DURATION = 1209600; // 14 days
+const VALID_DURATION = 1209600; // 14 days in seconds
 const ALG = 'HS256';
 const TYP = 'JWT';
 
@@ -52,7 +52,8 @@ export function decodeJWTPayload(jwt: string): JWTPayload {
   return JSON.parse(payload) as JWTPayload;
 }
 
-export async function isJWTValid(jwt: string, env: Env): Promise<boolean> {
+export async function isJWTValid(jwt: string, ctx: Context): Promise<boolean> {
+  const { env, log } = ctx;
   const [eHeader, ePayload, hSig] = jwt.split('.');
   if (!eHeader || !ePayload || !hSig) {
     return false;
@@ -69,7 +70,9 @@ export async function isJWTValid(jwt: string, env: Env): Promise<boolean> {
     return false;
   }
 
-  if (Date.now() > payload.exp) {
+  if (Date.now() / 1000 > payload.exp) {
+    log.info('[Auth/jwt] payload expired: ', payload.exp, Date.now() / 1000);
+
     return false;
   }
 
@@ -85,7 +88,7 @@ export async function generateJWT(
   username: string,
   env: Env,
 ): Promise<[token: string, ttl: number]> {
-  const now = Date.now();
+  const now = Date.now() / 1000;
 
   const header: JWTHeader = {
     alg: 'HS256',

@@ -28,6 +28,7 @@ export function unauthenticatedResponse(ctx: Context) {
 export const needsAuth: Route = async (request, ctx) => {
   const ok = await isAuthenticated(request, ctx);
   if (!ok) {
+    ctx.log.info('[Auth/middleware] not authenticated');
     return unauthenticatedResponse(ctx);
   }
 

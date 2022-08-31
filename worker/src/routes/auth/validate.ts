@@ -10,18 +10,18 @@
  * governing permissions and limitations under the License.
  */
 
-import type { Context, Env } from '../../types';
+import type { Context } from '../../types';
 import { isJWTValid } from './jwt';
 
-function authenticateKey(key: string, env: Env): boolean {
-  return key === env.UI_KEY;
+function authenticateKey(key: string, ctx: Context): boolean {
+  return key === ctx.env.UI_KEY;
 }
 
-function authenticateBasic(encoded: string, env: Env): boolean {
+function authenticateBasic(encoded: string, ctx: Context): boolean {
   const decoded = atob(encoded);
   // user ignored for poc
   const [_, password] = decoded.split(':');
-  return password === env.UI_PASSWORD;
+  return password === ctx.env.UI_PASSWORD;
 }
 
 /**
@@ -30,11 +30,11 @@ function authenticateBasic(encoded: string, env: Env): boolean {
  * 2. not revoked
  * 3. valid signature
  */
-export async function authenticateToken(jwt: string, env: Env): Promise<boolean> {
-  return isJWTValid(jwt, env);
+export async function authenticateToken(jwt: string, ctx: Context): Promise<boolean> {
+  return isJWTValid(jwt, ctx);
 }
 
-async function authenticateCookie(cookieStr: string | undefined, env: Env): Promise<boolean> {
+async function authenticateCookie(cookieStr: string | undefined, ctx: Context): Promise<boolean> {
   if (!cookieStr) {
     return false;
   }
@@ -52,7 +52,7 @@ async function authenticateCookie(cookieStr: string | undefined, env: Env): Prom
     return false;
   }
 
-  return authenticateToken(token, env);
+  return authenticateToken(token, ctx);
 }
 
 export async function isAuthenticated(request: Request, ctx: Context): Promise<boolean> {
@@ -66,16 +66,16 @@ export async function isAuthenticated(request: Request, ctx: Context): Promise<b
       const val = spl.join(' ');
       switch (scheme.toLowerCase()) {
         case 'basic':
-          return authenticateBasic(val, env);
+          return authenticateBasic(val, ctx);
         case 'key':
-          return authenticateKey(val, env);
+          return authenticateKey(val, ctx);
         case 'bearer':
-          return authenticateToken(val, env);
+          return authenticateToken(val, ctx);
         default:
           break;
       }
     }
   }
 
-  return authenticateCookie(request.headers.get('cookie'), env);
+  return authenticateCookie(request.headers.get('cookie'), ctx);
 }

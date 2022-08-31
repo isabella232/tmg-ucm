@@ -30,10 +30,8 @@ const login: Route = async (request, ctx) => {
     }
 
     const { username, password } = json;
-    log.info('username, password: ', username, password);
-
     if (!password || password.trim() !== env.UI_PASSWORD) {
-      log.warn('Not authorized: ', password);
+      log.warn('Not authorized: ', username, password);
       return new Response('Not authorized', { status: 401 });
     }
 
@@ -59,7 +57,7 @@ const logout: Route = async (request, ctx) => {
     return new Response('Invalid request', { status: 400 });
   }
 
-  const valid = await isJWTValid(token, ctx.env);
+  const valid = await isJWTValid(token, ctx);
   if (!valid) {
     return new Response('ok', { status: 200 });
   }
@@ -70,8 +68,6 @@ const logout: Route = async (request, ctx) => {
 };
 
 export const AuthAPI: Route = async (request, ctx) => {
-  ctx.log.log('[AuthAPI] pathname: ', ctx.url.pathname);
-
   switch (ctx.url.pathname) {
     case '/api/auth/login':
       return login(request, ctx);
@@ -83,7 +79,6 @@ export const AuthAPI: Route = async (request, ctx) => {
 };
 
 export const AuthUI: Route = (request, ctx) => {
-  ctx.log.log('[AuthUI] pathname: ', ctx.url.pathname);
   switch (ctx.url.pathname) {
     case '/auth':
       return responseHTML(indexHTML);

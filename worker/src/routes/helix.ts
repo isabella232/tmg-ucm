@@ -17,42 +17,15 @@ const fontsURL = (url: URL) => {
   url.pathname = spl[spl.length - 1];
 };
 
-const imageHandler = (ctx: Context): Promise<Response> => {
-  const curl = ctx.url;
-
-  const image:RequestInitCfPropertiesImage = {};
-  if (curl.searchParams.has('imwidth')) {
-    image.width = Number.parseInt(curl.searchParams.get('imwidth'), 10);
-  }
-
-  if (curl.searchParams.has('impolicy')) {
-    const policy = curl.searchParams.get('impolicy');
-    if (policy === 'utilities-thumbnail') {
-      image.width = 60;
-    }
-  } else if (curl.searchParams.has('imheight')) {
-    image.height = Number.parseInt(curl.searchParams.get('imheight'), 10);
-  }
-
-  const url = `${ctx.env.CONTENT_ENDPOINT}${curl.pathname}`;
-  return fetch(url, {
-    cf: {
-      image,
-    },
-  });
-};
-
 const Helix: Route = async (request, ctx) => {
   const { env, log } = ctx;
-
-  if (ctx.url.pathname.endsWith('.png') || ctx.url.pathname.endsWith('.jpg')) {
-    return imageHandler(ctx);
-  }
 
   const url = new URL(request.url);
   if (ctx.url.pathname.endsWith('.woff')) {
     fontsURL(url);
-  } else if (env.CACHE_GEN) {
+  } else if (ctx.url.pathname.startsWith('/content/dam')) {
+    return undefined;
+  } if (env.CACHE_GEN) {
     url.searchParams.set('gen', env.CACHE_GEN);
   }
 
