@@ -1,3 +1,11 @@
+## [1.1.4](https://github.com/hlxsites/tmg-ucm/compare/v1.1.3...v1.1.4) (2022-08-31)
+
+
+### Bug Fixes
+
+* image proxy, index html rewriter ([e7ae850](https://github.com/hlxsites/tmg-ucm/commit/e7ae850f49f032ba778f238a5abcb6defdc4db1d))
+* index html rewriter draft ([1676eff](https://github.com/hlxsites/tmg-ucm/commit/1676eff0a747a402f3230bf7961cf3f441cdfb5d))
+
 ## [1.1.3](https://github.com/hlxsites/tmg-ucm/compare/v1.1.2...v1.1.3) (2022-08-30)
 
 
