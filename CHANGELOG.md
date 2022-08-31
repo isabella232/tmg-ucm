@@ -1,3 +1,10 @@
+## [1.1.6](https://github.com/hlxsites/tmg-ucm/compare/v1.1.5...v1.1.6) (2022-08-31)
+
+
+### Bug Fixes
+
+* header articles ([cb9775d](https://github.com/hlxsites/tmg-ucm/commit/cb9775d7991a86ca1dffe5c5b0d72a64b6edbce0))
+
 ## [1.1.5](https://github.com/hlxsites/tmg-ucm/compare/v1.1.4...v1.1.5) (2022-08-31)
 
 
