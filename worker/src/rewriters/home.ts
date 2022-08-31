@@ -13,41 +13,8 @@
 /* eslint-disable no-underscore-dangle */
 
 import { Context, DeepObjectKeys } from '../types';
-
-interface Article {
-  type?: string;
-  url: string;
-  headline: string;
-  standfirst?: string;
-  image?: string;
-  kicker?: string;
-  author: {
-    name?: string;
-    url?: string;
-    image?: string;
-  }
-  meta: {
-    live?: boolean;
-    /**
-     * eg. 4/5
-     */
-    rating?: string;
-    quote?: boolean;
-  }
-  toString(this: Article, index: number, total: number, row?: boolean): string;
-}
-
-type ArticleListType = 'header' | 'list' | 'opinions' | 'package';
-interface ArticleList {
-  type: ArticleListType;
-  variant?: string;
-  heading: string;
-  url?: string;
-  image?: string;
-  articles: Article[];
-  push(this: ArticleList, article: Article): void;
-  toString(this: ArticleList): string;
-}
+import { HomeArticle, isArticle } from './HomeArticle';
+import { HomeArticleList, isArticleList } from './HomeArticleList';
 
 const headTemplate = (origin: string) => {
   return /* html */`\
@@ -84,130 +51,6 @@ const headTemplate = (origin: string) => {
 </head>`;
 };
 
-const sectionMetadata = (meta: Record<string, string>) => {
-  return `\
-<div class="section-metadata">
-  ${
-  Object.entries(meta).map(([k, v]) => {
-    return `\
-  <div>
-    <div>${k}</div>
-    <div>${v}</div>
-  </div>`;
-  }).join('\n')
-}
-</div>`;
-};
-
-const articleTemplate = (article: Article) => {
-  return /* html */`\
-<div class="article">
-  ${article.image ? /* html */`
-  <div>
-    <div>
-      <picture>
-        <source media="(max-width: 400px)" srcset="${article.image}">
-        <img src="${article.image}" alt="" loading="lazy">
-      </picture>
-    </div>
-  </div>` : ''}
-  <div>
-    <div>
-      <h3><a href="${article.url}">${article.headline}</a></h3>
-      <p>${article.standfirst}</p>
-    </div>
-  </div>
-  
-  ${article.author.name || article.author.image ? /* html */`\
-  <div>
-    <div>
-      ${article.author.name ? /* html */`<a href="${article.author.url}">${article.author.name}</a>` : ''}
-      ${article.author.image ? /* html */`<picture>
-        <source media="(max-width: 400px)" srcset="${article.author.image}">
-        <img src="${article.author.image}" alt="" loading="lazy">
-      </picture>` : ''}
-    </div>` : ''}
-  </div>
-
-  ${article.kicker ? /* html */`\
-  <div>
-    <div>kicker</div>
-    <div>${article.kicker}</div>
-  </div>` : ''}
-
-</div>
-`;
-};
-
-const initArticleList = (type: ArticleListType): ArticleList => {
-  return {
-    type,
-    heading: '',
-    articles: [],
-    push(article: Article) {
-      this.articles.push(article);
-    },
-    toString() {
-      if (this.type === 'header') {
-        return `\
-<div>
-  <div class="header-articles">
-    ${this.articles.map((a, i) => a.toString(i, this.articles.length, true)).join('\n')}
-  </div>
-</div>`;
-      }
-
-      return `\
-<div>
-  <h3>${this.heading}</h3>
-  ${this.articles.map((a, i) => a.toString(i, this.articles.length)).join('\n')}
-  ${sectionMetadata({ style: type })}
-</div>`;
-    },
-  };
-};
-
-const initArticle = (type?: string): Article => {
-  return {
-    type,
-    url: '',
-    headline: '',
-    standfirst: '',
-    image: '',
-    kicker: '',
-    author: {
-      name: '',
-      url: '',
-      image: '',
-    },
-    meta: {
-      live: false,
-      rating: '',
-      quote: false,
-    },
-    toString(index: number, total: number, row = false) {
-      if (row) {
-        return /* html */`\
-<div>
-  <div>
-    <h4><a href="${this.url}">${this.headline}</a></h4>
-    <p>${this.standfirst}</p>
-  </div>
-  ${this.image ? /* html */`\
-  <div>
-    <picture>
-      <source media="(max-width: 400px)" srcset="${this.image}">
-      <img src="${this.image}" alt="" loading="lazy">
-    </picture>
-  </div>` : ''}
-</div>`;
-      }
-
-      return articleTemplate(this);
-    },
-  };
-};
-
 const makeBodyStream = (): {
   stream: ReadableStream;
   writer: { close: () => Promise<void>; push: (chunk: string) => Promise<void> };
@@ -242,42 +85,21 @@ const makeBodyStream = (): {
 export function attach(ctx: Context): HTMLRewriter {
   const { rewriter } = ctx;
 
-  let article: Article | undefined;
-  let articles: ArticleList | undefined;
+  let article: HomeArticle | undefined;
+  let articleList: HomeArticleList | undefined;
 
-  let keyType: 'article' | 'list';
-  let key: DeepObjectKeys<Article> | DeepObjectKeys<ArticleList>;
-  const setKey = (
-    e: Element,
-    _key: DeepObjectKeys<Article> | DeepObjectKeys<ArticleList>,
-    _keyType: 'article' | 'list' = 'article',
-    revertKey: DeepObjectKeys<Article> = undefined,
-  ) => {
-    key = _key;
-    keyType = _keyType;
-    e.onEndTag(() => {
-      key = revertKey;
-      if (!revertKey) {
-        keyType = undefined;
-      }
-    });
-  };
   const { stream, writer } = makeBodyStream();
 
   return rewriter
     .onDocument({
       text: (t) => {
         const text = t.text.trim();
-
-        if (text && key) {
-          const spl = key.split('.');
-          let k = spl.shift();
-          let obj = keyType === 'article' ? article : articles as unknown as Record<string, string>;
-          while (spl.length) {
-            obj = obj[k] as unknown as Record<string, string>;
-            k = spl.shift();
+        if (text) {
+          if (article?.hasKey()) {
+            article.setValue(text);
+          } else if (articleList?.hasKey()) {
+            articleList.setValue(text);
           }
-          obj[k] += t.text;
         }
         t.remove();
       },
@@ -293,19 +115,14 @@ export function attach(ctx: Context): HTMLRewriter {
         e.before(headTemplate(ctx.url.origin), { html: true });
       },
     })
-    .on('script', {
+    .on(`a[href^="${ctx.env.CONTENT_ENDPOINT}"]`, {
+      // replace hard links with local links
       element: (e) => {
-        e.remove();
-      },
-    })
-    .on('body>a', {
-      element: (e) => {
-        e.remove();
-      },
-    })
-    .on('a[href^="https://www.telegraph.co.uk"]', {
-      element: (e) => {
-        e.setAttribute('href', e.getAttribute('href').replace('https://www.telegraph.co.uk', ctx.url.origin));
+        let href = e.getAttribute('href').replace(ctx.env.CONTENT_ENDPOINT, '');
+        if (!href.startsWith('/')) {
+          href = `/${href}`;
+        }
+        e.setAttribute('href', href);
       },
     })
     .on('body', {
@@ -313,17 +130,18 @@ export function attach(ctx: Context): HTMLRewriter {
         /**
          * @todo using ReadableStreams as Content replacement is not implemented in CF workers yet
          */
-        // e.after(stream, { html: true });
+        // e.before(stream, { html: true });
 
         await writer.push(`
-<header></header>
-<main><div>
-`);
+<body>
+  <header></header>
+  <main>`);
 
         e.onEndTag(async () => {
-          await writer.push(`\
-</div></main>
-<footer></footer>`);
+          await writer.push(`
+  </main>
+  <footer></footer>
+</body>`);
           // eslint-disable-next-line @typescript-eslint/no-floating-promises
           writer.close();
         });
@@ -331,86 +149,52 @@ export function attach(ctx: Context): HTMLRewriter {
     })
     .on('body > div.site-header-wrapper', {
       element: (e) => {
-        articles = initArticleList('header');
+        articleList = new HomeArticleList('header');
         e.onEndTag(async () => {
-          // push header articles
-          await writer.push(articles.toString());
-          articles = undefined;
+          await writer.push(articleList.toString());
+          articleList = undefined;
         });
       },
     })
     .on('section, section > :not(article), main div.opinion, main div.opinion > :not(article)', {
       element: (e) => {
-        const className = e.getAttribute('class');
-        if (!articles && (e.tagName === 'section' || (e.tagName === 'div' && className === 'opinion'))) {
-          // initialize ArticleList
-          if (className.includes('package')) {
-            articles = initArticleList('package');
-          } else if (className.includes('article-list')) {
-            articles = initArticleList('list');
-          } else {
-            articles = initArticleList('list');
-          }
+        if (!articleList && isArticleList(e)) {
+          articleList = new HomeArticleList(e);
           e.onEndTag(async () => {
-            // push current ArticleList
-            await writer.push(articles.toString());
-            articles = undefined;
+            await writer.push(articleList.toString());
+            articleList = undefined;
           });
-        } else if (articles) {
-          // set ArticleList properties
-          if (className.startsWith('package__heading ')) {
-            setKey(e, 'heading', 'list');
-          }
+        }
+
+        if (articleList) {
+          articleList.processElement(e);
         }
       },
     })
     .on('article, article *', {
       element: (e) => {
-        const className = e.getAttribute('class');
-
-        if (!article && e.tagName === 'article') {
-          // initialize current article
-          article = initArticle();
+        if (!article && isArticle(e)) {
+          article = new HomeArticle();
           e.onEndTag(() => {
-            articles.push(article);
+            articleList.push(article);
             article = undefined;
           });
-        } else if (article) {
-          // set article properties
-          if (className?.startsWith('e-utility__title') || className?.startsWith('list-headline__text')) {
-            setKey(e, 'headline');
-          } else if (className?.startsWith('e-kicker')) {
-            setKey(e, 'kicker', 'article', 'headline');
-          } else if (e.tagName === 'img' && className?.includes('author-image')) {
-            const url = e.getAttribute('src');
-            article.author.image = url;
-          } else if (e.tagName === 'img') {
-            const src = e.getAttribute('src');
-            if (src) {
-              article.image = src;
-            }
-          } else if (e.tagName.startsWith('h') && e.tagName.length === 2) {
-            setKey(e, 'headline');
-          } else if (e.tagName === 'p') {
-            setKey(e, 'standfirst');
-          } else if (e.tagName === 'a') {
-            const url = e.getAttribute('href');
-            const rel = e.getAttribute('rel');
-            if (rel === 'author') {
-              article.author.url = url;
-            } else {
-              article.url = url;
-            }
-          } else if (e.tagName === 'span') {
-            const itemtype = e.getAttribute('itemtype');
-            if (itemtype && itemtype === 'https://schema.org/Person') {
-              setKey(e, 'author.name');
-            }
-          }
+          return;
+        }
+
+        if (article) {
+          article.processElement(e);
         }
       },
     })
+    .on('script,body>a', {
+      // remove anchor links and all scripts entirely
+      element: (e) => {
+        e.remove();
+      },
+    })
     .on('*', {
+      // process all other nodes
       element: (e) => {
         e.removeAndKeepContent();
       },

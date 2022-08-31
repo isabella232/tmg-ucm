@@ -17,6 +17,6 @@ module.exports = {
     'import/extensions': ['error', {
       js: 'always',
     }],
-    'import/prefer-default-export': [0],
+    'import/prefer-default-export': 'off',
   },
 };
