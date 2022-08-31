@@ -1,3 +1,10 @@
+## [1.1.5](https://github.com/hlxsites/tmg-ucm/compare/v1.1.4...v1.1.5) (2022-08-31)
+
+
+### Bug Fixes
+
+* html rewrite cleanup ([7d1b3f6](https://github.com/hlxsites/tmg-ucm/commit/7d1b3f60069572decb298590c0bd326363fd30f6))
+
 ## [1.1.4](https://github.com/hlxsites/tmg-ucm/compare/v1.1.3...v1.1.4) (2022-08-31)
 
 
