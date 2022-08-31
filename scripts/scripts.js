@@ -94,6 +94,16 @@ export function loadCSS(href, callback) {
   }
 }
 
+export function createTag(name, attrs) {
+  const el = document.createElement(name);
+  if (typeof attrs === 'object') {
+    Object.entries(attrs).forEach(([k, v]) => {
+      el.setAttribute(k, v);
+    });
+  }
+  return el;
+}
+
 /**
  * Retrieves the content of metadata tags.
  * @param {string} name The metadata name (or property)
@@ -619,14 +629,18 @@ function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
   header.append(headerBlock);
   decorateBlock(headerBlock);
-  loadBlock(headerBlock);
+  loadBlock(headerBlock).then(() => {
+    document.dispatchEvent(new Event('loaded-header'));
+  });
 }
 
 function loadFooter(footer) {
   const footerBlock = buildBlock('footer', '');
   footer.append(footerBlock);
   decorateBlock(footerBlock);
-  loadBlock(footerBlock);
+  loadBlock(footerBlock).then(() => {
+    document.dispatchEvent(new Event('loaded-footer'));
+  });
 }
 
 /**
