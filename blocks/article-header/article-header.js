@@ -20,13 +20,14 @@ function templateAuthor(author, index, authors) {
   const url = new URL(author.url);
   /* eslint-disable no-nested-ternary */
   return `\
-<span class="byline-meta" itemscope="" itemtype="https://schema.org/Person" itemprop="author">
-  <a href="${url.pathname}" itemprop="url" class="e-byline__link" data-test="byline-link" rel="author">
-    <span class="bytext">${index === 0 ? 'By' : index === authors.length - 1 ? ' and ' : ', '}</span>
+<span class="byline-meta" itemtype="https://schema.org/Person" itemprop="author">
+  ${index ? index === authors.length - 1 ? '<span class="bytext"> and </span>' : '<span class="bytext">, </span>' : ''}
+  <a href="${url.pathname}" itemprop="url" class="byline-link" rel="author">
+    ${!index ? ' <span class="bytext">By </span>' : ''}
     <span class="author" data-test="author-name" itemprop="name" content="${author.name}">${author.name}${author.role ? ', ' : ''}</span>
   </a>\
   ${author.role ? `
-  <span class="byline__job-title" itemprop="jobTitle">${author.role}</span>` : ''}
+  <span class="byline-job-title" itemprop="jobTitle">${author.role}</span>` : ''}
 </span>`;
 }
 
@@ -61,7 +62,7 @@ function templateByline(authorsDiv) {
     const nameLink = aDiv.querySelector('a');
     const roleDiv = aDiv.childNodes.length > 1 ? aDiv.querySelectorAll(':scope > div')[1] : undefined;
     return {
-      name: nameLink.innerText,
+      name: nameLink.innerText.trim(' ,'),
       url: nameLink.href,
       role: roleDiv ? roleDiv.innerText?.trim() : undefined,
     };

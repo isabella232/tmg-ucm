@@ -33,7 +33,7 @@ main .article-header .article-feature-image {
   font-size: 1.4rem;
   font-variation-settings: "wght" 300, "opsz" 9;
   color: #222;
-  display: block;
+  display: inline;
   line-height: 1.25;
   margin-bottom: 4px;
   margin-top: 8px;
@@ -43,6 +43,15 @@ main .article-header .article-feature-image {
   color: #767676;
   font-style: italic;
   margin-right: 4px;
+}
+
+.byline-job-title {
+  font-family: 'Austin News', georgia, times, serif;
+  font-size: 1.2rem;
+  font-variation-settings: "wght" 300, "opsz" 9;
+  line-height: 1.55;
+  color: #767676;
+  text-transform: uppercase;
 }
 
 .byline-date .published-date {
