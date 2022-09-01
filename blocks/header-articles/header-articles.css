@@ -5,28 +5,31 @@ header nav.h-articles div.h-articles-wrapper {
   width: 60%;
   justify-content: flex-end;
   flex-wrap: wrap;
+  margin-top: 1rem;
 }
 
 header nav.h-articles div.h-articles-wrapper h4 {
-  font-size: 1rem;
+  font-family: "Austin News", Georgia, Times, serif;
+  font-size: 1.2rem;
   margin: 0 0 4px;
   text-transform: uppercase;
 }
 
 header nav.h-articles div.h-articles-wrapper p {
   font-family: "Telesans Text Regular", arial, sans-serif;
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: #767676;
-  line-height: 1.2;
+  line-height: 1.4;
   margin: 0;
 }
 
 header nav.h-articles .h-article {
   min-width: 264px;
-  max-width: 33%;
+  max-width: 30%;
   margin: auto 4px;
   padding: 0 4px;
   display: flex;
+  height: 100%;
 }
 
 @media (min-width: 900px) {

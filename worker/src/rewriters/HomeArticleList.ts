@@ -27,6 +27,8 @@ export function isArticleList(e: Element): boolean {
 export class HomeArticleList {
   public type: HomeArticleListType;
 
+  public variant: string;
+
   public heading = '';
 
   private articles: HomeArticle[] = [];
@@ -41,6 +43,13 @@ export class HomeArticleList {
     const className = e.getAttribute('class');
     if (className.includes('package')) {
       this.type = 'package';
+      if (className.includes('package--small')) {
+        this.variant = 'small';
+      } else if (className.includes('package--medium')) {
+        this.variant = 'medium';
+      } else if (className.includes('package--large')) {
+        this.variant = 'large';
+      }
     } else if (className.includes('article-list')) {
       this.type = 'list';
     } else {
@@ -68,6 +77,16 @@ export class HomeArticleList {
       return `
 <div>
   <div class="header-articles">\
+${this.articles.map((a, i) => a.toString(i, this.articles.length, true)).join('')}
+  </div>
+</div>`.split('\n').map((l) => ''.padStart(indent, '  ') + l).join('\n');
+    }
+
+    if (this.type === 'package') {
+      return `
+<div>
+  <div class="package${this.variant ? ` ${this.variant}` : ''}">
+    <div><div><h3>${this.heading}</h3></div></div>\
 ${this.articles.map((a, i) => a.toString(i, this.articles.length, true)).join('')}
   </div>
 </div>`.split('\n').map((l) => ''.padStart(indent, '  ') + l).join('\n');

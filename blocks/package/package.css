@@ -1,0 +1,53 @@
+main>div.section.package-container>div.packages {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+main>div.section.package-container>div.packages::after {
+  content: '';
+}
+
+main>div.section section.package {
+  padding: 2rem;
+}
+
+main section.package .package-heading {
+  color: #04555c;
+  letter-spacing: .5px;
+  text-transform: uppercase;
+}
+
+main section.package>article h3 {
+  font-size: 1.5rem;
+}
+
+main section.package>article:first-child h2 {
+  font-size: 2.6rem;
+}
+
+main section.package>article h2 span.kicker,
+main section.package>article h3 span.kicker {
+  color: #04777b;
+  margin-right: 0.05em;
+  padding-right: 0.25em;
+  border-right: 1px solid #ddd;
+}
+
+main section.package>article p.standfirst {
+  font-family: "Austin News", Georgia, Times, serif;
+  font-size: 1.5rem;
+  font-variation-settings: "wght" 300, "opsz" 9;
+  line-height: 1.4;
+  padding-bottom: 8px;
+  padding-top: 8px;
+  color: #494949;
+}
+
+main section.package .package-grid {
+  overflow: hidden;
+  padding-top: 16px;
+}
+
+main section.package article.card {
+  width: 100%;
+}
