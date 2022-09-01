@@ -122,7 +122,7 @@ const Content: Route = async (request, ctx) => {
     return new Response('Not found', { status: 404 });
   }
 
-  resp = new Response(generateHTML(respBody), {
+  resp = new Response(generateHTML(respBody, ctx), {
     status: 200,
     headers: {
       'cache-control': 'max-age=60, must-revalidate',

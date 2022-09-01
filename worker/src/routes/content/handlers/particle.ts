@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { Context } from '../../../types';
 import { BodyNode } from '../types';
 
 /**
@@ -31,7 +32,7 @@ import { BodyNode } from '../types';
  *   </div>
  * </div>
  */
-export default (node: BodyNode): string => {
+export default (node: BodyNode, ctx: Context): string => {
   if (['embed', 'illustrator-embed'].includes(node.subtype as string)) {
     return `\
 <div class="embed">

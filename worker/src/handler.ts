@@ -27,8 +27,8 @@ router
   .post('/api/auth/*', AuthAPI)
   .get('/auth/*', AuthUI)
   .get('/+(nav|footer).plain.html', Helix)
+  .get('/*.+(png|svg|jpg|css|js|woff2)', Helix)
   .get('/content/dam/*', needsAuth, Content)
-  .get('/*.+(png|svg|jpg|css|js)', Helix)
   .get('/*', needsAuth, Content)
   .all('/*', fallback);
 

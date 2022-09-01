@@ -1,0 +1,146 @@
+main .article-header {
+  max-width: 833px;
+  margin: auto;
+}
+
+main .article-header h1 {
+  font-size: 2.4rem;
+}
+
+main .article-header ul {
+  margin: 0;
+}
+
+main .article-header .standfirst {
+  color: #494949;
+  font-family: "Austin News", Georgia, Times, serif;
+  font-size: 1.7rem;
+  font-variation-settings: "wght" 300, "opsz" 9;
+  line-height: 1.4;
+  padding-bottom: 8px;
+}
+
+main .article-header .byline-date,
+main .article-header .article-meta-wrapper,
+main .article-header .article-feature-image {
+  padding: 1rem calc(100vw - 100%) 1rem calc(100vw - 100%);
+  margin: auto calc(0px - calc(100vw - 100%)) auto calc(0px - calc(100vw - 100%));
+  border-top: 1px solid #ddd;
+}
+
+.byline-date .byline-meta {
+  font-family: 'Austin News', georgia, times, serif;
+  font-size: 1.4rem;
+  font-variation-settings: "wght" 300, "opsz" 9;
+  color: #222;
+  display: block;
+  line-height: 1.25;
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.byline-date .bytext {
+  color: #767676;
+  font-style: italic;
+  margin-right: 4px;
+}
+
+.byline-date .published-date {
+  color: #767676;
+  font-family: 'Telesans Text Regular', Arial, sans-serif;
+  font-size: 1.2rem;
+}
+
+main .article-header .article-meta-wrapper {
+  position: relative;
+}
+
+main .article-header .article-meta-wrapper ul {
+  padding: 0;
+}
+
+main .article-header .article-meta-wrapper li {
+  display: inline;
+}
+
+main .article-header .article-share {
+  display: flex;
+  flex-direction: column;
+}
+
+main .article-header .article-share li {
+  margin-right: 8px;
+}
+
+main .article-share a.share-link {
+  align-items: center;
+  border: 1px solid #222;
+  border-radius: 50%;
+  display: inline-flex;
+  height: 32px;
+  justify-content: center;
+  width: 32px;
+}
+
+main .article-share .share-link>img {
+  display: inline;
+  width: auto;
+  height: 20px;
+}
+
+main .article-header .article-related {
+  display: none;
+}
+
+
+@media only screen and (min-width: 768px) {
+  main .article-header h1 {
+    font-size: 2.6rem;
+  }
+
+  main .article-header .article-feature-image {
+    border-top: 1px double #ddd;
+    position: relative;
+  }
+
+  main .article-header .article-feature-image::before {
+    content: " ";
+    width: 100%;
+    position: absolute;
+    border-top: 1px double #ddd;
+    left: 0;
+    top: 3px;
+  }
+
+  main .article-header .standfirst {
+    font-size: 1.9rem;
+    font-variation-settings: "wght" 400, "opsz" 60;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  main .article-header h1 {
+    font-size: 3rem;
+  }
+}
+
+@media only screen and (min-width: 1280px) {
+  main .article-header h1 {
+    font-size: 3.5rem;
+  }
+
+  main .article-header .article-related {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media only screen and (min-width: 1440px) {
+  main .article-header h1 {
+    font-size: 4.1rem;
+  }
+
+  main .article-header .standfirst {
+    font-size: 2.2rem;
+  }
+}

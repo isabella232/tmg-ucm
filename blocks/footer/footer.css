@@ -1,12 +1,19 @@
 footer {
   padding: 2rem;
   background-color: var(--overlay-background-color);
-  font-size: var(--body-font-size-s);
 }
 
 footer .footer {
   max-width: 1200px;
   margin: auto;
+  font-family: 'Telesans Text Regular', arial, sans-serif;
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+footer .footer a,
+footer .footer p {
+  color: #fff;
 }
 
 footer .footer p {

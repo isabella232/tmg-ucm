@@ -161,7 +161,7 @@ export class HomeArticle {
     <div>
       <div>
         <h4><a href="${this.url}">${this.headline}</a></h4>
-        <p>${this.standfirst}</p>
+        ${this.standfirst ? `<p>${this.standfirst}</p>` : ''}
       </div>
 ${this.image ? /* html */`\
       <div>
