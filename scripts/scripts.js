@@ -637,18 +637,12 @@ function buildArticleHeaderBlock(main) {
   const authors = main.querySelector('div.authors');
   const picture = main.querySelector('picture');
   const caption = picture.parentElement.nextElementSibling.tagName === 'P' ? picture.parentElement.nextElementSibling : null;
-  console.log('headline: ', headline);
-  console.log('standfirst: ', standfirst);
-  console.log('authors: ', authors);
-  console.log('picutre: ', picture, picture.parentElement.nextElementSibling.tagName);
-  console.log('caption: ', caption);
 
   /* eslint-disable no-bitwise */
   if (headline
     && standfirst
     && (standfirst.compareDocumentPosition(headline) & Node.DOCUMENT_POSITION_PRECEDING)
     && (picture.compareDocumentPosition(headline) & Node.DOCUMENT_POSITION_PRECEDING)) {
-    console.log('build header block');
     const section = document.createElement('div');
     section.append(buildBlock('article-header', { elems: [headline, standfirst, authors, picture, caption] }));
     main.prepend(section);
@@ -674,6 +668,40 @@ function loadFooter(footer) {
   });
 }
 
+function templateImage(picture, caption, credit) {
+  return `
+<div class="article-image">
+  <figure>
+    ${picture.outerHTML}
+    <figcaption>
+      ${caption} <span class="credit">${credit}</span>
+    </figcaption>
+  </figure>
+</div>`;
+}
+
+function wrapFigures(main) {
+  main.querySelectorAll('main picture').forEach((pic, i) => {
+    if (!i) return;
+
+    let caption;
+    let credit;
+    caption = pic.parentElement.nextElementSibling;
+    if (caption) {
+      credit = caption.querySelector('em');
+      if (credit) {
+        credit.remove();
+        credit = credit.innerText;
+      }
+      caption.remove();
+      caption = caption.innerText;
+    }
+
+    const img = templateImage(pic, caption, credit);
+    pic.parentElement.innerHTML = img;
+  });
+}
+
 /**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
@@ -682,7 +710,6 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     const type = getMetadata('og:type');
-    console.log('type: ', type);
 
     if (type === 'article') {
       // build article autoblocks:
@@ -691,6 +718,8 @@ function buildAutoBlocks(main) {
       // 3. more from X (first pathname segment)
       loadCSS('/styles/article.css');
       buildArticleHeaderBlock(main);
+      // wrap images as figures
+      wrapFigures(main);
     }
   } catch (error) {
     // eslint-disable-next-line no-console

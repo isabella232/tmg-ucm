@@ -274,8 +274,6 @@ a.clickable-area-link::before {
   }
 }
 
-
-
 .grid-col {
   padding-left: 8px;
   padding-right: 8px
@@ -968,4 +966,20 @@ a.clickable-area-link::before {
   .grid-col-end {
     grid-column-end: -1
   }
+}
+
+figcaption {
+  font-family: 'Telesans Text Regular', Arial, sans-serif;
+  font-size: 1.2rem;
+  line-height: 1.5;
+  color: #494949;
+}
+
+main span.credit::before {
+  content: 'CREDIT: ';
+  margin-left: 3px;
+  padding-left: 5px;
+  color: #767676;
+  font-size: 1rem;
+  border-left: 1px solid #767676;
 }

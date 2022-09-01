@@ -137,7 +137,7 @@ function templateBodyImage(picture, caption, credit) {
   <figure>
     ${picture.outerHTML}
     <figcaption>
-      ${caption} | <span class="credit">${credit}</span>
+      ${caption} <span class="credit">${credit}</span>
     </figcaption>
   </figure>
 </div>`;
