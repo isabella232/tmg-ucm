@@ -1,3 +1,10 @@
+## [1.1.8](https://github.com/hlxsites/tmg-ucm/compare/v1.1.7...v1.1.8) (2022-09-01)
+
+
+### Bug Fixes
+
+* byline styles ([5be0f27](https://github.com/hlxsites/tmg-ucm/commit/5be0f274b8ddddf2280ef3f780d66ec210290200))
+
 ## [1.1.7](https://github.com/hlxsites/tmg-ucm/compare/v1.1.6...v1.1.7) (2022-09-01)
 
 
