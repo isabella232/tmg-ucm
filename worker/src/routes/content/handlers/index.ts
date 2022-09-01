@@ -14,15 +14,16 @@ import video from './video';
 import particle from './particle';
 import image from './image';
 import { BodyNode } from '../types';
+import { Context } from '../../../types';
 
-export const processNode = (node: BodyNode): string => {
+export const processNode = (ctx: Context, node: BodyNode): string => {
   switch (node.type) {
     case 'video':
-      return video(node);
+      return video(node, ctx);
     case 'image':
-      return image(node);
+      return image(node, ctx);
     case 'particle':
-      return particle(node);
+      return particle(node, ctx);
     default:
       return node['html-data'];
   }

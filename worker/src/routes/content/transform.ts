@@ -12,7 +12,7 @@
 
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 
-import type { AnyOk } from '../../types';
+import type { AnyOk, Context } from '../../types';
 import { flattenKV } from '../../util';
 import type {
   BodyNode,
@@ -57,7 +57,8 @@ const template = ({
         ${authors.map((author) => {
     return `<meta property="author" content="${author.name}">`;
   }).join('        \n')}
-        <meta name="publication-date" content="${meta.createdDate}">
+        <meta name="publication-date" content="${meta.createDate}">
+        <meta name="modified-date" content="${meta.modifyDate || meta.createDate}">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta property="og:type" content="${meta.type}">
         <meta property="og:site_name" content="The Telegraph">
@@ -102,8 +103,8 @@ ${
 /**
  * Convert each body node to corresponding HTML
  */
-const templateContent = (nodes: BodyNode[]): string => {
-  return nodes.map(processNode).filter((n) => !!n).join('\n');
+const templateContent = (nodes: BodyNode[], ctx: Context): string => {
+  return nodes.map((n) => processNode(ctx, n)).filter((n) => !!n).join('\n');
 };
 
 const getOgImage = (nodes: BodyNode[]): ImageNode & { url: string } => {
@@ -122,19 +123,21 @@ const getOgImage = (nodes: BodyNode[]): ImageNode & { url: string } => {
   };
 };
 
-const generateHTML = (queryRes: AnyOk) => {
+const generateHTML = (queryRes: AnyOk, ctx: Context) => {
   const hit: Hit = queryRes.hits[0] as Hit;
   const { metadata, content } = hit;
   const extensions = flattenKV(metadata.extensions, 'key', 'value');
   const annotations = flattenKV(metadata.annotations, 'name', 'uri');
   const image = getOgImage(content.body);
+  console.log('hit: ', hit);
 
   const opts: TemplateOptions = {
     meta: {
       canonicalLink: extensions.url,
       description: content.standfirst || content.headline,
       tags: Object.keys(annotations),
-      createdDate: metadata['tmg-created-date'] ?? '',
+      createDate: metadata['tmg-display-date'] ?? '',
+      modifyDate: metadata['tmg-last-modified-date'] ?? '',
       type: metadata.type,
     },
     image: {
@@ -149,7 +152,7 @@ const generateHTML = (queryRes: AnyOk) => {
     title: content.headline,
     headline: content.headline,
     standfirst: content.standfirst,
-    content: templateContent(content.body),
+    content: templateContent(content.body, ctx),
   };
   return template(opts);
 };

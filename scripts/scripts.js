@@ -614,6 +614,9 @@ window.addEventListener('error', (event) => {
 
 loadPage(document);
 
+/**
+ * @param {Element} main
+ */
 function buildHeroBlock(main) {
   const h1 = main.querySelector('h1');
   const picture = main.querySelector('picture');
@@ -623,6 +626,34 @@ function buildHeroBlock(main) {
     section.append(buildBlock('hero', { elems: [picture, h1] }));
     main.prepend(section);
   }
+}
+
+/**
+ * @param {Element} main
+ */
+function buildArticleHeaderBlock(main) {
+  const headline = main.querySelector(':scope > div > h1:first-child');
+  const standfirst = main.querySelector(':scope > div > p:nth-child(2)');
+  const authors = main.querySelector('div.authors');
+  const picture = main.querySelector('picture');
+  const caption = picture.parentElement.nextElementSibling.tagName === 'P' ? picture.parentElement.nextElementSibling : null;
+  console.log('headline: ', headline);
+  console.log('standfirst: ', standfirst);
+  console.log('authors: ', authors);
+  console.log('picutre: ', picture, picture.parentElement.nextElementSibling.tagName);
+  console.log('caption: ', caption);
+
+  /* eslint-disable no-bitwise */
+  if (headline
+    && standfirst
+    && (standfirst.compareDocumentPosition(headline) & Node.DOCUMENT_POSITION_PRECEDING)
+    && (picture.compareDocumentPosition(headline) & Node.DOCUMENT_POSITION_PRECEDING)) {
+    console.log('build header block');
+    const section = document.createElement('div');
+    section.append(buildBlock('article-header', { elems: [headline, standfirst, authors, picture, caption] }));
+    main.prepend(section);
+  }
+  /* eslint-enable no-bitwise */
 }
 
 function loadHeader(header) {
@@ -650,10 +681,35 @@ function loadFooter(footer) {
 function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
+    const type = getMetadata('og:type');
+    console.log('type: ', type);
+
+    if (type === 'article') {
+      // build article autoblocks:
+      // 1. article header
+      // 2. related & share sidebar/footer
+      // 3. more from X (first pathname segment)
+      loadCSS('/styles/article.css');
+      buildArticleHeaderBlock(main);
+    }
   } catch (error) {
     // eslint-disable-next-line no-console
     console.error('Auto Blocking failed', error);
   }
+}
+
+export function getIcon(icons, alt) {
+  // eslint-disable-next-line no-param-reassign
+  icons = Array.isArray(icons) ? icons : [icons];
+  const [defaultIcon, mobileIcon] = icons;
+  const icon = (mobileIcon && window.innerWidth < 600) ? mobileIcon : defaultIcon;
+  return (`<img class="icon icon-${icon}" src="/icons/${icon}.svg" alt="${alt || icon}">`);
+}
+
+export function getIconElement(icons, size, alt) {
+  const $div = createTag('div');
+  $div.innerHTML = getIcon(icons, alt, size);
+  return ($div.firstChild);
 }
 
 /**

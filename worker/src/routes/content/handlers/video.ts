@@ -10,6 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
+import { Context } from '../../../types';
 import { BodyNode } from '../types';
 
 /**
@@ -29,7 +30,7 @@ import { BodyNode } from '../types';
  *   </div>
  * </div>
  */
-export default (node: BodyNode): string => {
+export default (node: BodyNode, ctx: Context): string => {
   if (node['html-data'].includes('youtube')) {
     return `\
 <div class="video">

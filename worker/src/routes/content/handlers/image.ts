@@ -10,9 +10,21 @@
  * governing permissions and limitations under the License.
  */
 
+import { Context } from '../../../types';
 import { BodyNode } from '../types';
 
-export default (node: BodyNode): string => {
-  if (!node['html-caption']) return '';
-  return `${node['html-data']}\n${node['html-caption']}`;
+export default (node: BodyNode, ctx: Context): string => {
+  const {
+    caption, credit, data, 'alt-text': alt,
+  } = node;
+  if (!caption) return '';
+
+  return `\
+  <p>
+    <picture>
+      <source media="(max-width: 400px)" srcset="${data}">
+      <img src="${node.data.replace(ctx.env.CONTENT_ENDPOINT, '')}" alt="${alt ?? ''}" loading="lazy">
+    </picture>
+  </p>
+  <p>${(caption as string).trim()}${credit ? `<em>${(credit as string).trim()}</em>` : ''}</p>`;
 };

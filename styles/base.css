@@ -109,6 +109,10 @@ blockquote {
   margin-bottom: 1em;
 }
 
+figure {
+  margin: 0;
+}
+
 a {
   color: var(--link-color);
   text-decoration: none;

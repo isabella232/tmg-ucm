@@ -47,7 +47,8 @@ export interface Hit {
       'name': string;
       'uri': string;
     }[];
-    'tmg-created-date': string;
+    'tmg-display-date': string;
+    'tmg-last-modified-date': string;
     [key: string]: unknown;
   }
   content: {
@@ -64,7 +65,8 @@ export interface TemplateOptions {
     canonicalLink: string;
     description: string;
     tags: string[];
-    createdDate: string;
+    createDate: string;
+    modifyDate: string;
     type: string;
   };
   image: {
