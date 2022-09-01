@@ -1,3 +1,12 @@
+## [1.1.7](https://github.com/hlxsites/tmg-ucm/compare/v1.1.6...v1.1.7) (2022-09-01)
+
+
+### Bug Fixes
+
+* home styles before moving to article blocks ([bdd3f64](https://github.com/hlxsites/tmg-ucm/commit/bdd3f64d0bb761942bd10a7e5ab340eb72853f0c))
+* more styles ([10057c1](https://github.com/hlxsites/tmg-ucm/commit/10057c1e89aae3fcc0f603650bec4a7fe79e3c7b))
+* more styles ([f482db5](https://github.com/hlxsites/tmg-ucm/commit/f482db585063935b563eda30e9d19155508e1205))
+
 ## [1.1.6](https://github.com/hlxsites/tmg-ucm/compare/v1.1.5...v1.1.6) (2022-08-31)
 
 
