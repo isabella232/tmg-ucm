@@ -46,7 +46,6 @@ function constructPayload(form) {
 
 async function submitForm(form) {
   const payload = constructPayload(form);
-  console.log('POST: ', form.dataset.action);
   const resp = await fetch(form.dataset.action, {
     method: 'POST',
     cache: 'no-cache',
@@ -162,12 +161,10 @@ function createRating(fd) {
 }
 
 function lazyLoadRatings(el) {
-  console.log('form: ', el);
   // wait until next tick so that ratings is attached to form
   setTimeout(() => {
     (async () => {
       const json = await queryForm(el, 'query');
-      console.log('json: ', json);
       if (!json) {
         return;
         // for testing, just set some data
@@ -175,7 +172,6 @@ function lazyLoadRatings(el) {
       }
 
       const { data: [row] } = json;
-      console.log('row: ', row);
       let { average, total } = row;
       average = parseFloat(average);
       average = Number.isNaN(average) ? 0 : average;

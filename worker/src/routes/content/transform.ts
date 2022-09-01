@@ -129,7 +129,6 @@ const generateHTML = (queryRes: AnyOk, ctx: Context) => {
   const extensions = flattenKV(metadata.extensions, 'key', 'value');
   const annotations = flattenKV(metadata.annotations, 'name', 'uri');
   const image = getOgImage(content.body);
-  console.log('hit: ', hit);
 
   const opts: TemplateOptions = {
     meta: {
