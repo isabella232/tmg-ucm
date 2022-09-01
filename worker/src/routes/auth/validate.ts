@@ -56,8 +56,6 @@ async function authenticateCookie(cookieStr: string | undefined, ctx: Context): 
 }
 
 export async function isAuthenticated(request: Request, ctx: Context): Promise<boolean> {
-  const { env } = ctx;
-
   const authHeader = request.headers.get('authorization');
   if (authHeader) {
     const spl = authHeader.split(' ');

@@ -40,7 +40,7 @@ const makeQueryJSON = (url: string): string => {
 };
 
 const fetchIndex = async (ctx: Context): Promise<Response> => {
-  const { env, log } = ctx;
+  const { env } = ctx;
   const res = await fetch(`${env.CONTENT_ENDPOINT}`);
   if (!res.ok) {
     return res;

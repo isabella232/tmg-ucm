@@ -727,12 +727,28 @@ function buildAutoBlocks(main) {
   }
 }
 
-export function getIcon(icons, alt) {
+export function getIcon(icons, alt, minBp) {
   // eslint-disable-next-line no-param-reassign
   icons = Array.isArray(icons) ? icons : [icons];
   const [defaultIcon, mobileIcon] = icons;
-  const icon = (mobileIcon && window.innerWidth < 600) ? mobileIcon : defaultIcon;
-  return (`<img class="icon icon-${icon}" src="/icons/${icon}.svg" alt="${alt || icon}">`);
+  const ogIcon = (mobileIcon && window.innerWidth < 600) ? mobileIcon : defaultIcon;
+  let icon = ogIcon;
+
+  let rotation;
+  if (icon.startsWith('arrow-')) {
+    const direction = icon.substring('arrow-'.length);
+    icon = 'arrow';
+    if (direction === 'left') {
+      rotation = 90;
+    } else if (direction === 'up') {
+      rotation = 180;
+    } else if (direction === 'right') {
+      rotation = 270;
+    }
+  }
+  return (`<img class="icon icon-${icon} icon-${ogIcon} ${minBp ? `v-${minBp}` : ''}" ${rotation
+    ? `style="transform:rotate(${rotation}deg);"`
+    : ''} src="/icons/${icon}.svg" alt="${alt || icon}">`);
 }
 
 export function getIconElement(icons, size, alt) {

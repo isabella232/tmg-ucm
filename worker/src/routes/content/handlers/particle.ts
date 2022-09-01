@@ -32,7 +32,7 @@ import { BodyNode } from '../types';
  *   </div>
  * </div>
  */
-export default (node: BodyNode, ctx: Context): string => {
+export default (node: BodyNode, _ctx: Context): string => {
   if (['embed', 'illustrator-embed'].includes(node.subtype as string)) {
     return `\
 <div class="embed">

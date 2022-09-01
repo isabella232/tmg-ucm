@@ -50,7 +50,7 @@ export type Route = (
   ctx: Context
 ) => Promise<Response | undefined> | Response | undefined;
 
-// eslint-disable-next-line @typescript-eslint/ban-types
+// eslint-disable-next-line @typescript-eslint/ban-types, @typescript-eslint/no-explicit-any
 export type Constructor<T = {}> = new (...args: any[]) => T;
 
 type Join<K, P> = K extends string | number ?

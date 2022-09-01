@@ -1,3 +1,9 @@
+main {
+  padding-left: 0px;
+  padding-right: 0px;
+  padding-bottom: 24px;
+}
+
 main .article-header {
   max-width: 833px;
   margin: auto;
@@ -23,9 +29,9 @@ main .article-header .standfirst {
 main .article-header .byline-date,
 main .article-header .article-meta-wrapper,
 main .article-header .article-feature-image {
-  padding: 1rem calc(100vw - 100%) 1rem calc(100vw - 100%);
-  margin: auto calc(0px - calc(100vw - 100%)) auto calc(0px - calc(100vw - 100%));
-  border-top: 1px solid #ddd;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 .byline-date .byline-meta {
@@ -58,6 +64,12 @@ main .article-header .article-feature-image {
   color: #767676;
   font-family: 'Telesans Text Regular', Arial, sans-serif;
   font-size: 1.2rem;
+}
+
+main .article-header .article-feature-image img {
+  width: 100vw;
+  max-width: 100vw;
+  margin: 0 -16px;
 }
 
 main .article-header .article-meta-wrapper {
@@ -103,6 +115,21 @@ main .article-header .article-related {
 
 
 @media only screen and (min-width: 768px) {
+  main .article-header .article-feature-image img {
+    width: auto;
+    margin: unset;
+    max-width: 100%;
+  }
+
+  main .article-header .byline-date,
+  main .article-header .article-meta-wrapper,
+  main .article-header .article-feature-image {
+    padding: 1rem calc(100vw - 100%) 1rem calc(100vw - 100%);
+    margin: auto calc(0px - calc(100vw - 100%)) auto calc(0px - calc(100vw - 100%));
+    border-top: 1px solid #ddd;
+    width: auto;
+  }
+
   main .article-header h1 {
     font-size: 2.6rem;
   }
