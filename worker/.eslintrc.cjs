@@ -16,6 +16,7 @@ module.exports = {
         'arrow-body-style': 'off',
         'prefer-arrow-callback': 'off',
         'no-use-before-define': 'off',
+        '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }],
         '@typescript-eslint/no-misused-promises': [
           'error',
           {

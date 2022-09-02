@@ -12,7 +12,7 @@
 
 /* eslint-disable no-underscore-dangle */
 
-import { Context, DeepObjectKeys } from '../types';
+import { Context } from '../types';
 import { HomeArticle, isArticle } from './HomeArticle';
 import { HomeArticleList, isArticleList } from './HomeArticleList';
 

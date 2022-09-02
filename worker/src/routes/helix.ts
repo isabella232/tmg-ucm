@@ -10,7 +10,7 @@
  * governing permissions and limitations under the License.
  */
 
-import type { Context, Route } from '../types';
+import type { Route } from '../types';
 
 const fontsURL = (url: URL) => {
   const spl = url.pathname.split('/');
@@ -30,7 +30,6 @@ const Helix: Route = async (request, ctx) => {
   }
 
   const upstream = `${env.UPSTREAM}${url.pathname}${url.search}`;
-
   log.debug('[Helix] fetching: ', upstream);
 
   const req = new Request(upstream, request);

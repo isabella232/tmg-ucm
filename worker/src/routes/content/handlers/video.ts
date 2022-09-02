@@ -30,7 +30,7 @@ import { BodyNode } from '../types';
  *   </div>
  * </div>
  */
-export default (node: BodyNode, ctx: Context): string => {
+export default (node: BodyNode, _: Context): string => {
   if (node['html-data'].includes('youtube')) {
     return `\
 <div class="video">
