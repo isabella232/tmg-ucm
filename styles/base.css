@@ -371,12 +371,19 @@ main .section.highlight {
 }
 
 /* breakpoint visibility modifiers */
+.v-xs,
 .v-sm,
 .v-md,
 .v-lg,
 .v-xl,
 .v-xxl {
   display: none !important;
+}
+
+@media only screen and (min-width: 480px) {
+  .v-xs {
+    display: unset !important;
+  }
 }
 
 @media only screen and (min-width: 576px) {

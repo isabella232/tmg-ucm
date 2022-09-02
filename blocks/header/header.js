@@ -174,7 +174,10 @@ const SECONDARY_ITEMS = [
 const BUTTONS = [
   {
     name: 'search',
-    icon: 'search',
+    label: `<svg class="search-icon tmg-svg-icon" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 16">
+  <title>Search Icon</title>
+  <path d="M12,14.91l-3.24-5A5.5,5.5,0,1,0,5.5,11a5.27,5.27,0,0,0,1.44-.2L10.32,16ZM2,5.5A3.5,3.5,0,1,1,5.5,9,3.5,3.5,0,0,1,2,5.5Z"></path>
+</svg>`,
     vbp: 'md',
   },
   {
@@ -187,9 +190,11 @@ const BUTTONS = [
       <span class="subscript">
         Free for one month
       </span>
-      ${getIcon('arrow-right', undefined, 'xl')}
+    </span>
+    <span class="v-xl">
+      ${getIcon('arrow-right')}
     </span>`,
-    vbp: 'sm',
+    vbp: 'xs',
   },
   {
     name: 'login',
@@ -278,7 +283,7 @@ function primaryHeader() {
       <div class="primary-list-wrapper">
         <ul>
       ${PRIMARY_ITEMS.map((item) => `
-          <li>
+          <li class="item-${item.label.toLowerCase()}">
             <a href=${item.href}>
               <span class="nav-item-content">${item.label}</span>
             </a>
@@ -317,13 +322,13 @@ function template() {
 }
 
 /**
- * @param {HTMLDivElement} block
+ * @param {HTMLDivElement} wrapper
  */
-function attachAccordionHandlers(block) {
-  block.querySelectorAll('.accordion-trigger').forEach((trigger) => {
+function attachAccordionHandlers(wrapper) {
+  wrapper.querySelectorAll('.accordion-trigger').forEach((trigger) => {
     const { id } = trigger;
     const num = id.split('-').pop();
-    const list = block.querySelector(`#accordion-${num}`);
+    const list = wrapper.querySelector(`#accordion-${num}`);
     trigger.addEventListener('click', (e) => {
       e.preventDefault();
       list.classList.toggle('open');
@@ -333,10 +338,24 @@ function attachAccordionHandlers(block) {
 }
 
 /**
+ * @param {HTMLDivElement} wrapper
+ */
+function setSelectedPrimary(wrapper) {
+  let [topic] = window.location.pathname.split('/');
+  let item = wrapper.querySelector(`header .header-primary li.item-${topic.toLowerCase()}`);
+  if (!item) {
+    topic = 'news';
+    item = wrapper.querySelector(`header .header-primary li.item-${topic}`);
+  }
+  item.classList.add('selected');
+}
+
+/**
  * @param {HTMLDivElement} block
  */
 export default async function decorate(block) {
   const wrapper = block.parentElement;
   wrapper.innerHTML = template();
   attachAccordionHandlers(wrapper);
+  setSelectedPrimary(wrapper);
 }
