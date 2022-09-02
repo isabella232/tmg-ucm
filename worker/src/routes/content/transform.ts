@@ -129,15 +129,18 @@ const generateHTML = (queryRes: AnyOk, ctx: Context) => {
   const extensions = flattenKV(metadata.extensions, 'key', 'value');
   const annotations = flattenKV(metadata.annotations, 'name', 'uri');
   const image = getOgImage(content.body);
+  const tags = Object.entries(annotations).map(([k, v]) => v.startsWith('topics:') && k).filter((k) => !!k);
+  const structure = Object.fromEntries(Object.entries(annotations).filter(([_, v]) => v.startsWith('structure:')));
 
   const opts: TemplateOptions = {
     meta: {
       canonicalLink: extensions.url,
       description: content.standfirst || content.headline,
-      tags: Object.keys(annotations),
+      tags,
       createDate: metadata['tmg-display-date'] ?? '',
       modifyDate: metadata['tmg-last-modified-date'] ?? '',
       type: metadata.type,
+      structure,
     },
     image: {
       url: image.data,

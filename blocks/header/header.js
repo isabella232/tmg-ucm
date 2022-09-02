@@ -199,11 +199,12 @@ const BUTTONS = [
   {
     name: 'login',
     label: 'Log in',
-    href: `/auth/login/#${encodeURIComponent(window.location.pathname)}`,
+    href: `/auth#${encodeURIComponent(window.location.pathname)}`,
   },
   {
     name: 'menu',
     label: '<span class="hamburger"></span>',
+    href: `${window.location.pathname}#menu`,
   },
 ];
 
