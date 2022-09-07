@@ -68,6 +68,7 @@ export interface TemplateOptions {
     createDate: string;
     modifyDate: string;
     type: string;
+    structure: Record<string, string>;
   };
   image: {
     url: string;

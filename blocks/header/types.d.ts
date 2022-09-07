@@ -18,5 +18,5 @@ export interface ButtonItem {
   /** icon name (svg in /icons/) */
   icon?: string;
   /** visibility min breakpoint */
-  vbp?: 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
+  vbp?: 'xs' | 'sm' | 'md' | 'lg' | 'xl' | 'xxl';
 }
