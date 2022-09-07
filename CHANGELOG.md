@@ -1,3 +1,12 @@
+## [1.1.10](https://github.com/hlxsites/tmg-ucm/compare/v1.1.9...v1.1.10) (2022-09-07)
+
+
+### Bug Fixes
+
+* better tags ([81d94f4](https://github.com/hlxsites/tmg-ucm/commit/81d94f441d1d1af5b3b8dc1dfdc17f325b6731a5))
+* more header styles ([6f1a16b](https://github.com/hlxsites/tmg-ucm/commit/6f1a16bc52ff2bfebdf788be79c24c63d8217e26))
+* temp ignore ([749d7a7](https://github.com/hlxsites/tmg-ucm/commit/749d7a7a33a0185c9fd1dad8737814f1ef067f72))
+
 ## [1.1.9](https://github.com/hlxsites/tmg-ucm/compare/v1.1.8...v1.1.9) (2022-09-02)
 
 
