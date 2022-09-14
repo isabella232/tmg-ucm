@@ -1,12 +1,17 @@
-main {
-  padding-left: 0;
-  padding-right: 0;
-  padding-bottom: 24px;
+main > div.section.article-header-container {
+  padding-top: 0;
 }
+
 
 main .article-header {
   max-width: 833px;
   margin: auto;
+  display: flex;
+  flex-direction: column-reverse;
+}
+
+main .article-header > span {
+  width: 100%;
 }
 
 main .article-header h1 {
@@ -29,9 +34,19 @@ main .article-header .standfirst {
 main .article-header .byline-date,
 main .article-header .article-meta-wrapper,
 main .article-header .article-feature-image {
-  padding: 0;
-  margin: 0;
-  width: 100%;
+  padding: 0 calc(100vw - 100%) 1rem calc(100vw - 100%);
+  margin: auto calc(0px - calc(100vw - 100%)) auto calc(0px - calc(100vw - 100%));
+  width: auto;
+}
+
+main .article-header .byline-date,
+main .article-header .article-meta-wrapper {
+  border-top: 1px solid #ddd;
+}
+
+main .article-header .article-meta-wrapper {
+  padding-top: 1rem;
+  position: relative;
 }
 
 .byline-date .byline-meta {
@@ -66,14 +81,58 @@ main .article-header .article-feature-image {
   font-size: 1.2rem;
 }
 
-main .article-header .article-feature-image img {
+main .article-share .share-link img {
+  display: inline;
+  width: auto;
+  height: 20px;
+}
+
+main .article-header .article-feature-image figure {
   width: 100vw;
   max-width: 100vw;
   margin: 0 -16px;
 }
 
-main .article-header .article-meta-wrapper {
+main .article-header .article-feature-image .feature-image-wrapper {
   position: relative;
+}
+
+main .article-header .article-feature-image figure img {
+  width: 100%;
+  max-width: 100%;
+}
+
+main .article-header .article-feature-image figure .article-caption-trigger {
+  position: absolute;
+  align-items: center;
+  background: #fff;
+  border: 0;
+  bottom: 0;
+  color: #fff;
+  cursor: pointer;
+  display: flex;
+  height: 40px;
+  justify-content: center;
+  outline: 0;
+  padding: 0;
+  right: 0;
+  width: 40px;
+}
+
+main .article-header .article-feature-image figure .article-caption-trigger img {
+  height: 20px;
+  width: 20px;
+}
+
+main .article-header .article-feature-image figure figcaption {
+  padding: 8px;
+  background-color: #333;
+  color: #ddd;
+  display: none;
+}
+
+main .article-header .article-feature-image figure figcaption.visible {
+  display: block;
 }
 
 main .article-header .article-meta-wrapper ul {
@@ -103,31 +162,52 @@ main .article-share a.share-link {
   width: 32px;
 }
 
-main .article-share .share-link>img {
-  display: inline;
-  width: auto;
-  height: 20px;
-}
-
 main .article-header .article-related {
   display: none;
 }
 
+/* main .article-header .byline-date,
+main .article-header .article-meta-wrapper,
+main .article-header .article-feature-image {
+  padding: 1rem calc(100vw - 100%) 1rem calc(100vw - 100%);
+  margin: auto calc(0px - calc(100vw - 100%)) auto calc(0px - calc(100vw - 100%));
+  border-top: 1px solid #ddd;
+  width: auto;
+} */
+
+@media only screen and (min-width: 600px) {
+  main .article-header .article-feature-image figure {
+    margin: 0 -32px;
+  }
+}
 
 @media only screen and (min-width: 768px) {
-  main .article-header .article-feature-image img {
-    width: auto;
-    margin: unset;
-    max-width: 100%;
+  main .article-header {
+    flex-direction: column;
   }
 
   main .article-header .byline-date,
   main .article-header .article-meta-wrapper,
   main .article-header .article-feature-image {
-    padding: 1rem calc(100vw - 100%) 1rem calc(100vw - 100%);
-    margin: auto calc(0px - calc(100vw - 100%)) auto calc(0px - calc(100vw - 100%));
+    padding-top: 1rem;
     border-top: 1px solid #ddd;
+  }
+
+  main .article-header .article-feature-image figure {
     width: auto;
+    margin: unset;
+    max-width: 100%;
+  }
+
+  main .article-header .article-feature-image figure .article-caption-trigger {
+    display: none;
+  }
+
+  main .article-header .article-feature-image figure figcaption {
+    padding: 8px;
+    background-color: inherit;
+    color: inherit;
+    display: block;
   }
 
   main .article-header h1 {

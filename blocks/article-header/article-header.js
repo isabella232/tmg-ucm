@@ -136,7 +136,10 @@ function templateBodyImage(picture, caption, credit) {
   return `
 <div class="article-feature-image">
   <figure>
-    ${picture.outerHTML}
+    <span class="feature-image-wrapper">
+      ${picture.outerHTML}
+      <span class="article-caption-trigger">${getIcon('info', 'credit trigger')}</span>
+    </span>
     <figcaption>
       ${caption} <span class="credit">${credit}</span>
     </figcaption>
@@ -152,10 +155,12 @@ function template({
   related,
 }) {
   return `
-${headline}
-${standfirst}
-${byline}
-${related}
+<span>
+  ${headline}
+  ${standfirst}
+  ${byline}
+  ${related}
+</span>
 ${bodyImage}`;
 }
 
@@ -198,5 +203,11 @@ export default function decorate(block) {
 
   block.innerHTML = template({
     headline, standfirst, byline, bodyImage, related,
+  });
+
+  const captionEl = block.querySelector('.article-feature-image figure figcaption');
+  const captionTrigger = block.querySelector('.article-caption-trigger');
+  captionTrigger.addEventListener('click', () => {
+    captionEl.classList.toggle('visible');
   });
 }
