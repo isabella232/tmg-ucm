@@ -12,7 +12,7 @@
     "deploy": "wrangler publish --env production",
     "deploy:stage": "wrangler publish --env stage",
     "build": "node ./worker/build.mjs",
-    "dev": "concurrently --kill-others \"hlx up\" \"NODE_ENV=development miniflare --live-reload --debug --modules worker/dist/index.mjs\"",
+    "dev": "concurrently --kill-others \"hlx up --no-open\" \"NODE_ENV=development miniflare --live-reload --debug --modules worker/dist/index.mjs\" & open http://localhost:8787",
     "dev:remote": "NODE_ENV=development UPSTREAM='https://main--tmg-ucm--hlxsites.hlx.live' wrangler dev --env stage"
   },
   "repository": {
