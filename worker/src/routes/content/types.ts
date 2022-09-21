@@ -27,7 +27,14 @@ export interface ImageNode extends BodyNodeBase {
   height: number;
 }
 
-export type BodyNode = ImageNode | BodyNodeBase;
+export interface HeadingNode extends BodyNodeBase {
+  type: 'heading';
+  subtype: 'level1' | 'level2' | 'level3' | 'level4' | 'level5' | 'level6';
+  size: string;
+  style: string;
+}
+
+export type BodyNode = ImageNode | HeadingNode | BodyNodeBase;
 
 export interface Author {
   name: string;

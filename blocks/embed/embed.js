@@ -1,3 +1,5 @@
+import { readBlockConfig } from '../../scripts/scripts.js';
+
 const loadScript = (url, callback, type) => {
   const head = document.querySelector('head');
   const script = document.createElement('script');
@@ -114,12 +116,44 @@ const loadEmbed = (block, link) => {
   block.classList.add('embed-is-loaded');
 };
 
+/**
+ * @param {HTMLDivElement} block
+ */
 export default function decorate(block) {
   const link = block.querySelector('a').href;
+  const conf = readBlockConfig(block);
+  const isParticle = block.classList.contains('particle');
+
   block.textContent = '';
   const observer = new IntersectionObserver((entries) => {
     if (entries.some((e) => e.isIntersecting)) {
       loadEmbed(block, link);
+      if (!isParticle || !conf.id) return;
+
+      const frame = block.querySelector('iframe');
+      if (!frame) return;
+
+      const parent = frame.parentElement;
+      parent.style.paddingBottom = '0';
+
+      window.addEventListener('message', (ev) => {
+        let data;
+        try {
+          data = typeof ev.data === 'string' ? JSON.parse(ev.data) : ev.data;
+          if (typeof data !== 'object') {
+            throw Error(`Invalid payload type (${typeof data}): `, data);
+          }
+        } catch (e) {
+          console.error('[Embed] Error parsing data: ', e);
+          return;
+        }
+        if (data.id !== conf.id) return;
+
+        console.debug(`[Embed/${conf.id}] message: `, data);
+        if (data.height) {
+          parent.style.height = `${data.height}px`;
+        }
+      });
     }
   });
   observer.observe(block);

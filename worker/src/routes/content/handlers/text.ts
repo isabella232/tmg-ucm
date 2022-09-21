@@ -11,20 +11,9 @@
  */
 
 import type { Context } from '../../../types';
-import type { ImageNode } from '../types';
+import type { BodyNodeBase } from '../types';
 
-export default (node: ImageNode, ctx: Context): string => {
-  const {
-    caption, credit, data, 'alt-text': alt,
-  } = node;
-  if (!caption) return '';
-
-  return `\
-  <p>
-    <picture>
-      <source media="(max-width: 400px)" srcset="${data}">
-      <img src="${node.data.replace(ctx.env.CONTENT_ENDPOINT, '')}" alt="${alt ?? ''}" loading="lazy">
-    </picture>
-  </p>
-  <p>${caption.trim()}${credit ? `<em>${credit.trim()}</em>` : ''}</p>`;
+export default (node: BodyNodeBase, ctx: Context): string => {
+  const data = node['html-data'].replaceAll(`<a href="${ctx.env.CONTENT_ENDPOINT}`, '<a href="');
+  return data;
 };

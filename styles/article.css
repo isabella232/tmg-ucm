@@ -1,4 +1,0 @@
-main div.section:not(.article-header-container)>.default-content-wrapper {
-  max-width: 833px;
-  margin: auto;
-}

@@ -1,0 +1,33 @@
+main > .article {
+  max-width: 833px;
+  margin: auto;
+  padding: 0 8px;
+
+}
+
+main > .article p {
+  font-family: "Austin News",georgia,times,serif;
+  font-size: 1.7rem;
+  font-variation-settings: "wght" 300,"opsz" 9;
+  color: #333;
+  line-height: 1.55;
+  margin-bottom: 16px;
+}
+
+main > .article a {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+main > .article a:hover {
+  background-color: var(--link-color);
+  color: #fff;
+}
+
+main .article h2,
+main .article h3,
+main .article h4 {
+  font-family: "Austin News",Georgia,Times,serif;
+  font-variation-settings: "wght" 525,"opsz" 60;
+  margin-bottom: 24px;
+}

@@ -650,6 +650,17 @@ function buildArticleHeaderBlock(main) {
   /* eslint-enable no-bitwise */
 }
 
+/**
+ * @param {Element} main
+ */
+function buildArticleSection(main) {
+  const headerSection = main.querySelector('.section');
+  const section = headerSection.nextElementSibling;
+  section.classList.add('article');
+  section.setAttribute('data-block-name', 'article');
+  loadBlock(section);
+}
+
 function loadHeader(header) {
   const headerBlock = buildBlock('header', '');
   header.append(headerBlock);
@@ -703,6 +714,21 @@ function wrapFigures(main) {
 }
 
 /**
+ * @param {Element} main
+ */
+function buildAutoSections(main) {
+  try {
+    const type = getMetadata('og:type');
+    if (type === 'article') {
+      buildArticleSection(main);
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.error('Auto Sectioning failed', error);
+  }
+}
+
+/**
  * Builds all synthetic blocks in a container element.
  * @param {Element} main The container element
  */
@@ -710,13 +736,11 @@ function buildAutoBlocks(main) {
   try {
     buildHeroBlock(main);
     const type = getMetadata('og:type');
-
     if (type === 'article') {
       // build article autoblocks:
       // 1. article header
       // 2. related & share sidebar/footer
       // 3. more from X (first pathname segment)
-      loadCSS('/styles/article.css');
       buildArticleHeaderBlock(main);
       // wrap images as figures
       wrapFigures(main);
@@ -767,6 +791,7 @@ export function decorateMain(main) {
   decorateIcons(main);
   buildAutoBlocks(main);
   decorateSections(main);
+  buildAutoSections(main);
   decorateBlocks(main);
 }
 

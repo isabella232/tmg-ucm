@@ -98,8 +98,8 @@ video {
 
 :root {
   /* colors */
-  --link-color: #035fe6;
-  --link-hover-color: #136ff6;
+  --link-color: #04777b;
+  --link-hover-color: #04777b;
   --background-color: #fff;
   --overlay-background-color: #073349;
   --highlight-background-color: #ccc;
@@ -279,7 +279,7 @@ main input:hover {
 }
 
 main>div.section {
-  padding: 16px;
+  /* padding: 16px; */
 }
 
 main pre {
@@ -325,17 +325,17 @@ main {
   margin-right: auto;
   max-width: 1536px;
   width: 100%;
-  padding: 24px 8px 40px
+  padding-bottom: 40px
 }
 
-@media (min-width: 600px) {
+@media (min-width: 768px) {
   main .section {
-    padding: 64px 32px;
+    /* padding: 64px 32px; */
   }
 
   main {
-    padding-left: 16px;
-    padding-right: 16px
+    padding-left: 64px;
+    padding-right: 64px
   }
 }
 
@@ -355,8 +355,8 @@ main {
   }
 
   main {
-    padding-left: 48px;
-    padding-right: 48px;
+    padding-left: 82px;
+    padding-right: 82px;
   }
 }
 

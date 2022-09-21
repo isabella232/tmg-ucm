@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { Context } from '../../../types';
-import { BodyNode } from '../types';
+import type { Context } from '../../../types';
+import type { BodyNode } from '../types';
 
 /**
  * Input:
@@ -35,11 +35,19 @@ import { BodyNode } from '../types';
 export default (node: BodyNode, _ctx: Context): string => {
   if (['embed', 'illustrator-embed'].includes(node.subtype as string)) {
     return `\
-<div class="embed">
+<div class="embed particle">
   <div>
     <div>
       <a href="https://cf-particle-html.eip.telegraph.co.uk/${node.data}.html">${node['alt-text']}</a>
     </div>
+  </div>
+  <div>
+    <div>id</div>
+    <div>${node.data}</div>
+  </div>
+  <div>
+    <div>subtype</div>
+    <div>${node.subtype ?? ''}</div>
   </div>
 </div>`;
   }

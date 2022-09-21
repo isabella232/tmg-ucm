@@ -10,21 +10,29 @@
  * governing permissions and limitations under the License.
  */
 
+import type { BodyNode, HeadingNode, ImageNode } from '../types';
+import type { Context } from '../../../types';
+
 import video from './video';
 import particle from './particle';
 import image from './image';
-import { BodyNode } from '../types';
-import { Context } from '../../../types';
+import heading from './heading';
+import text from './text';
 
 export const processNode = (ctx: Context, node: BodyNode): string => {
   switch (node.type) {
     case 'video':
       return video(node, ctx);
     case 'image':
-      return image(node, ctx);
+      return image(node as ImageNode, ctx);
     case 'particle':
       return particle(node, ctx);
+    case 'heading':
+      return heading(node as HeadingNode, ctx);
+    case 'text':
+      return text(node, ctx);
     default:
+      console.warn('!! WARNING: fallback to default node handler: ', node);
       return node['html-data'];
   }
 };
