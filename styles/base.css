@@ -279,7 +279,7 @@ main input:hover {
 }
 
 main>div.section {
-  padding: 16px;
+  /* padding: 16px; */
 }
 
 main pre {
@@ -330,7 +330,7 @@ main {
 
 @media (min-width: 600px) {
   main .section {
-    padding: 64px 32px;
+    /* padding: 64px 32px; */
   }
 
   main {
