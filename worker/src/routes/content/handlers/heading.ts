@@ -11,20 +11,19 @@
  */
 
 import type { Context } from '../../../types';
-import type { ImageNode } from '../types';
+import type { HeadingNode } from '../types';
 
-export default (node: ImageNode, ctx: Context): string => {
-  const {
-    caption, credit, data, 'alt-text': alt,
-  } = node;
-  if (!caption) return '';
+const LEVELS = {
+  level1: 'h1',
+  level2: 'h2',
+  level3: 'h3',
+  level4: 'h4',
+  level5: 'h5',
+  level6: 'h6',
+};
 
-  return `\
-  <p>
-    <picture>
-      <source media="(max-width: 400px)" srcset="${data}">
-      <img src="${node.data.replace(ctx.env.CONTENT_ENDPOINT, '')}" alt="${alt ?? ''}" loading="lazy">
-    </picture>
-  </p>
-  <p>${caption.trim()}${credit ? `<em>${credit.trim()}</em>` : ''}</p>`;
+export default (node: HeadingNode, _ctx: Context): string => {
+  const { subtype, data } = node;
+  const tag = LEVELS[subtype];
+  return `<${tag}>${data}</${tag}>`;
 };

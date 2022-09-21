@@ -2,19 +2,6 @@ main > div.section.article-header-container {
   padding-top: 0;
 }
 
-main > div.section:not(.article-header-container) {
-  padding: 8px;
-}
-
-main > div.section:not(.article-header-container) p {
-  font-family: Austin News,georgia,times,serif;
-  font-size: 1.7rem;
-  font-variation-settings: "wght" 300,"opsz" 9;
-  color: #333;
-  line-height: 1.55;
-  margin-bottom: 16px;
-}
-
 main .article-header {
   max-width: 833px;
   margin: auto;
@@ -24,7 +11,7 @@ main .article-header {
 
 main .article-header > span {
   width: 100%;
-  padding: 0 1rem;
+  padding: 0 8px;
 }
 
 main .article-header ul {
@@ -124,10 +111,9 @@ main .article-header .article-feature-image figure img {
 main .article-header .article-feature-image figure .article-caption-trigger {
   position: absolute;
   align-items: center;
-  background: #fff;
+  background: #222;
   border: 0;
   bottom: 0;
-  color: #fff;
   cursor: pointer;
   display: flex;
   height: 40px;
@@ -141,6 +127,7 @@ main .article-header .article-feature-image figure .article-caption-trigger {
 main .article-header .article-feature-image figure .article-caption-trigger img {
   height: 20px;
   width: 20px;
+  filter: invert(100%);
 }
 
 main .article-header .article-feature-image figure figcaption {
@@ -216,6 +203,11 @@ main .article-header .article-feature-image {
     border-top: 1px solid #ddd;
   }
 
+  main .article-header .article-feature-image {
+    padding-top: 2rem;
+    padding-bottom: 0;
+  }
+
   main .article-header .article-feature-image figure {
     width: auto;
     margin: unset;
@@ -233,8 +225,16 @@ main .article-header .article-feature-image {
     display: block;
   }
 
-  main .article-header h1 {
+  main .article-header .headline {
     font-size: 2.6rem;
+    padding-bottom: 16px;
+    padding-top: 24px;
+  }
+
+  main .article-header .standfirst {
+    font-family: Austin News,Georgia,Times,serif;
+    font-size: 1.9rem;
+    font-variation-settings: "wght" 400,"opsz" 60;
   }
 
   main .article-header .article-feature-image {
@@ -255,16 +255,20 @@ main .article-header .article-feature-image {
     font-size: 1.9rem;
     font-variation-settings: "wght" 400, "opsz" 60;
   }
+
+  main .byline-date .byline {
+    margin-top: 0;
+  }
 }
 
 @media only screen and (min-width: 1024px) {
-  main .article-header h1 {
+  main .article-header .headline {
     font-size: 3rem;
   }
 }
 
 @media only screen and (min-width: 1280px) {
-  main .article-header h1 {
+  main .article-header .headline {
     font-size: 3.5rem;
   }
 
@@ -275,7 +279,7 @@ main .article-header .article-feature-image {
 }
 
 @media only screen and (min-width: 1440px) {
-  main .article-header h1 {
+  main .article-header .headline {
     font-size: 4.1rem;
   }
 

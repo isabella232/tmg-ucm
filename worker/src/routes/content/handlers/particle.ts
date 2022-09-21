@@ -10,8 +10,8 @@
  * governing permissions and limitations under the License.
  */
 
-import { Context } from '../../../types';
-import { BodyNode } from '../types';
+import type { Context } from '../../../types';
+import type { BodyNode } from '../types';
 
 /**
  * Input:
