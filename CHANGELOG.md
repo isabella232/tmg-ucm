@@ -1,3 +1,14 @@
+## [1.1.11](https://github.com/hlxsites/tmg-ucm/compare/v1.1.10...v1.1.11) (2022-09-21)
+
+
+### Bug Fixes
+
+* article header styles ([b4be2c0](https://github.com/hlxsites/tmg-ucm/commit/b4be2c0da09be5c9e69823a839ae6d838048d56a))
+* article styling ([ea661b9](https://github.com/hlxsites/tmg-ucm/commit/ea661b9cc1292531adde002844f4d5d1f73ac6da))
+* lint error ([3ec3c45](https://github.com/hlxsites/tmg-ucm/commit/3ec3c459393db6a12f2d6413f92a4bb66e3fd1af))
+* lint errors ([3f598b5](https://github.com/hlxsites/tmg-ucm/commit/3f598b5d3a8be87cfed7af689128d166f44bb7be))
+* update deps, handle iframe heights ([cef227e](https://github.com/hlxsites/tmg-ucm/commit/cef227efc4b15dcbf9e770381b65b3fa4c0492ae))
+
 ## [1.1.10](https://github.com/hlxsites/tmg-ucm/compare/v1.1.9...v1.1.10) (2022-09-07)
 
 
