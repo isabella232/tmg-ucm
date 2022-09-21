@@ -1,3 +1,12 @@
+## [1.1.12](https://github.com/hlxsites/tmg-ucm/compare/v1.1.11...v1.1.12) (2022-09-21)
+
+
+### Bug Fixes
+
+* footer stylesz ([aa11be4](https://github.com/hlxsites/tmg-ucm/commit/aa11be4b1a913a375fe987ed7a5cecff2fa81e0c))
+* related articles styling ([a157248](https://github.com/hlxsites/tmg-ucm/commit/a1572487acf714bdefb364418d5d72339b1e474c))
+* tests ([e1e5a64](https://github.com/hlxsites/tmg-ucm/commit/e1e5a64bbd7c0b7e52628ff72f26e76d3ce2f1d5))
+
 ## [1.1.11](https://github.com/hlxsites/tmg-ucm/compare/v1.1.10...v1.1.11) (2022-09-21)
 
 
