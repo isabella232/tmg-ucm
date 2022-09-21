@@ -121,6 +121,7 @@ function templateMeta(tags, headline) {
 <div class="article-meta-wrapper">
   <aside class="article-meta">
     <div class="article-related">
+      <span class="related-title">Related Topics</span>
       <ul>
         ${tags.map(templateRelatedTag).join(', ')}
       </ul>
