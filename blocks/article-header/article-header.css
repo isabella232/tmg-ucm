@@ -206,6 +206,8 @@ main .article-header .article-feature-image {
   main .article-header .article-feature-image {
     padding-top: 2rem;
     padding-bottom: 0;
+    border-top: 1px double #ddd;
+    position: relative;
   }
 
   main .article-header .article-feature-image figure {
@@ -232,14 +234,9 @@ main .article-header .article-feature-image {
   }
 
   main .article-header .standfirst {
-    font-family: Austin News,Georgia,Times,serif;
+    font-family: "Austin News",Georgia,Times,serif;
     font-size: 1.9rem;
     font-variation-settings: "wght" 400,"opsz" 60;
-  }
-
-  main .article-header .article-feature-image {
-    border-top: 1px double #ddd;
-    position: relative;
   }
 
   main .article-header .article-feature-image::before {
@@ -249,11 +246,6 @@ main .article-header .article-feature-image {
     border-top: 1px double #ddd;
     left: 0;
     top: 3px;
-  }
-
-  main .article-header .standfirst {
-    font-size: 1.9rem;
-    font-variation-settings: "wght" 400, "opsz" 60;
   }
 
   main .byline-date .byline {
