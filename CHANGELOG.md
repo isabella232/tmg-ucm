@@ -1,3 +1,10 @@
+## [1.1.15](https://github.com/hlxsites/tmg-ucm/compare/v1.1.14...v1.1.15) (2022-09-22)
+
+
+### Bug Fixes
+
+* social icon hover ([829cb74](https://github.com/hlxsites/tmg-ucm/commit/829cb7452808230365baa2c02f7e5e496434795d))
+
 ## [1.1.14](https://github.com/hlxsites/tmg-ucm/compare/v1.1.13...v1.1.14) (2022-09-22)
 
 
