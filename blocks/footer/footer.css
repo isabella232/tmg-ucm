@@ -2,11 +2,20 @@ footer {
   font-family: "Telesans Text Regular",arial,sans-serif;
   font-size: 1.4rem;
   line-height: 1;
-  background-color: #fff;
   border-top: 1px solid #ddd;
   content-visibility: auto;
   position: relative;
   z-index: 100;
+  background-color: #073349;
+}
+
+footer .primary-wrapper {
+  background-color: #fff;
+}
+
+footer .primary {
+  margin: 0 auto;
+  max-width: 1536px;
 }
 
 footer .masthead {
@@ -120,7 +129,6 @@ footer .secondary {
   color: #fff;
   flex: 100% 0 0;
   font-size: 1.2rem;
-  background-color: #073349;
   display: flex;
   flex-flow: row wrap;
   padding: 8px 8px 48px;

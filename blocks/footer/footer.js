@@ -82,11 +82,15 @@ function templateSecondary() {
 
 function template() {
   return /* html */`
-<div class="primary">
-  ${templatePrimary()}
+<div class="primary-wrapper">
+  <div class="primary">
+    ${templatePrimary()}
+  </div>
 </div>
-<div class="secondary">
-  ${templateSecondary()}
+<div class="secondary-wrapper">
+  <div class="secondary">
+    ${templateSecondary()}
+  </div>
 </div>
 `;
 }
