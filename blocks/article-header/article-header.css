@@ -188,6 +188,14 @@ main .article-share a.share-link {
   width: 32px;
 }
 
+main .article-share a.share-link:hover {
+  background-color: #222;
+}
+
+main .article-share a.share-link:hover img {
+  filter: invert(100%);
+}
+
 main .article-header .article-related {
   display: none;
 }
