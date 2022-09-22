@@ -1,3 +1,10 @@
+## [1.1.14](https://github.com/hlxsites/tmg-ucm/compare/v1.1.13...v1.1.14) (2022-09-22)
+
+
+### Bug Fixes
+
+* footer desktop fixes ([9503f8c](https://github.com/hlxsites/tmg-ucm/commit/9503f8cabe1fa1cffe0d3462b1b550d88b6f4f2d))
+
 ## [1.1.13](https://github.com/hlxsites/tmg-ucm/compare/v1.1.12...v1.1.13) (2022-09-22)
 
 
