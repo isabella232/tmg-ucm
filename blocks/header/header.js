@@ -338,15 +338,27 @@ function attachAccordionHandlers(wrapper) {
 
     const handler = (addRemoveToggle = 'toggle') => (e) => {
       e.preventDefault();
-      if ((e.type === 'mouseover' || e.type === 'mouseout') && e.view.innerWidth < 1024) {
+      if ((e.type === 'mouseover' || e.type === 'mouseleave') && e.view.innerWidth < 1024) {
         return;
       }
+      if (e.type === 'mouseleave' && list.contains(e.toElement)) {
+        const exitHandler = (ev) => {
+          if (ev.toElement !== trigger) {
+            trigger.classList.remove('open');
+            list.classList.remove('open');
+          }
+          list.removeEventListener('mouseleave', exitHandler);
+        };
+        list.addEventListener('mouseleave', exitHandler);
+        return;
+      }
+
       list.classList[addRemoveToggle]('open');
       trigger.classList[addRemoveToggle]('open');
     };
     trigger.addEventListener('click', handler());
     trigger.addEventListener('mouseover', handler('add'));
-    trigger.addEventListener('mouseout', handler('remove'));
+    trigger.addEventListener('mouseleave', handler('remove'));
   });
 }
 

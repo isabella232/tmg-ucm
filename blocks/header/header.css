@@ -492,9 +492,10 @@ li.accordion-item.more a span::after {
     position: absolute;
     width: auto;
     z-index: 2147483647;
+    /* transform: translateY(-10px); */
   }
 
-  nav > ul.nav-accordion > li {
+  nav > ul.nav-accordion > li.accordion-item {
     margin-right: 8px;
   }
 
