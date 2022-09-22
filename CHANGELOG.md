@@ -1,3 +1,12 @@
+## [1.1.13](https://github.com/hlxsites/tmg-ucm/compare/v1.1.12...v1.1.13) (2022-09-22)
+
+
+### Bug Fixes
+
+* cleanup nav handlers ([ffc19db](https://github.com/hlxsites/tmg-ucm/commit/ffc19db402c9b4f190daa6e479df65c37b7a50c5))
+* more nav styles ([4cf5b42](https://github.com/hlxsites/tmg-ucm/commit/4cf5b423674a5dcce4ca8f7b98fd224f97e04a87))
+* nav styles ([af3d8fb](https://github.com/hlxsites/tmg-ucm/commit/af3d8fb0f5b667fcec01b5329cdd74e7995dab0f))
+
 ## [1.1.12](https://github.com/hlxsites/tmg-ucm/compare/v1.1.11...v1.1.12) (2022-09-21)
 
 
