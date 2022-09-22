@@ -341,7 +341,15 @@ function attachAccordionHandlers(wrapper) {
       if ((e.type === 'mouseover' || e.type === 'mouseleave') && e.view.innerWidth < 1024) {
         return;
       }
+
+      list.classList[addRemoveToggle]('open');
+      trigger.classList[addRemoveToggle]('open');
+    };
+    trigger.addEventListener('click', handler());
+    trigger.addEventListener('mouseover', handler('add'));
+    trigger.addEventListener('mouseleave', (e) => {
       if (e.type === 'mouseleave' && list.contains(e.toElement)) {
+        e.preventDefault();
         const exitHandler = (ev) => {
           if (ev.toElement !== trigger) {
             trigger.classList.remove('open');
@@ -350,15 +358,10 @@ function attachAccordionHandlers(wrapper) {
           list.removeEventListener('mouseleave', exitHandler);
         };
         list.addEventListener('mouseleave', exitHandler);
-        return;
+      } else {
+        handler('remove')(e);
       }
-
-      list.classList[addRemoveToggle]('open');
-      trigger.classList[addRemoveToggle]('open');
-    };
-    trigger.addEventListener('click', handler());
-    trigger.addEventListener('mouseover', handler('add'));
-    trigger.addEventListener('mouseleave', handler('remove'));
+    });
   });
 }
 
