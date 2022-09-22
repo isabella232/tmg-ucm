@@ -211,17 +211,22 @@ const BUTTONS = [
 /**
  * @param {NavItem} item
  * @param {number} depth
+ * @param {'more'|'home'} specialType
  * @returns {string}
  */
-function accordionItem(item, depth) {
+function accordionItem(item, depth, specialType) {
   const {
     href,
     label,
+    children = [],
   } = item;
+
   return `
-<li class="accordion-item ${depth ? `accordion-item-${depth} clickable-area` : ''}">
-  ${depth ? `<a href="${href}" class="clickable-area-link">${label}</a>` : ''}
-  ${accordion(item.children, item, depth + 1)}
+<li class="accordion-item clickable-area accordion-item-${depth} ${specialType ? ` ${specialType}` : ''}">
+  ${depth || !children.length
+    ? `<a href="${href}" class="clickable-area-link">${specialType === 'more' ? `<span>${label}</span>` : label}</a>`
+    : ''}
+  ${accordion(children, item, depth + 1)}
 </li>`;
 }
 
@@ -241,14 +246,14 @@ function accordion(items, parent, depth = 0) {
   const nextDepth = hasHomeItem ? depth + 1 : depth;
 
   return `
-${parent ? `<a href="${parent.href}" class="accordion-trigger sub-accordion" id="accordion-trigger-${++accordionCt}">${parent.label}</a>` : ''}
+${parent ? `<a href="${href}" class="accordion-trigger sub-accordion" id="accordion-trigger-${++accordionCt}">${parent.label}</a>` : ''}
 <ul class="nav-accordion" id="accordion-${accordionCt}">
   ${hasHomeItem
-    ? accordionItem({ href, label: `${label} home` }, depth)
+    ? accordionItem({ href, label: `${label} home` }, depth, 'home')
     : ''}
   ${items.map((item) => accordionItem(item, nextDepth)).join('\n')}
   ${hasMoreItem
-    ? accordionItem({ href, label: 'More...' })
+    ? accordionItem({ href, label: 'More...' }, depth, 'more')
     : ''}
 </ul>`;
 }
@@ -330,10 +335,32 @@ function attachAccordionHandlers(wrapper) {
     const { id } = trigger;
     const num = id.split('-').pop();
     const list = wrapper.querySelector(`#accordion-${num}`);
-    trigger.addEventListener('click', (e) => {
+
+    const handler = (addRemoveToggle = 'toggle') => (e) => {
       e.preventDefault();
-      list.classList.toggle('open');
-      trigger.classList.toggle('open');
+      if ((e.type === 'mouseover' || e.type === 'mouseleave') && e.view.innerWidth < 1024) {
+        return;
+      }
+
+      list.classList[addRemoveToggle]('open');
+      trigger.classList[addRemoveToggle]('open');
+    };
+    trigger.addEventListener('click', handler());
+    trigger.addEventListener('mouseover', handler('add'));
+    trigger.addEventListener('mouseleave', (e) => {
+      if (e.type === 'mouseleave' && list.contains(e.toElement)) {
+        e.preventDefault();
+        const exitHandler = (ev) => {
+          if (ev.toElement !== trigger) {
+            trigger.classList.remove('open');
+            list.classList.remove('open');
+          }
+          list.removeEventListener('mouseleave', exitHandler);
+        };
+        list.addEventListener('mouseleave', exitHandler);
+      } else {
+        handler('remove')(e);
+      }
     });
   });
 }
